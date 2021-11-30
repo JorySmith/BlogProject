@@ -1,7 +1,8 @@
 # Blog Project
- A full stack C# ASP.NET MVC blog built from the ground up.
+ A full stack blog and content management site built from the ground up.
 
  ## Features
+ - Blogs, posts, comments, and tags
  - C# ASP.NET MVC
  - Object oriented programming
  - Secure via authentication and roles
