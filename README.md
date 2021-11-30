@@ -7,7 +7,7 @@
  - Secure via authentication and roles
 
  ## Build Steps
- 1) Create 4 models/C# classes: blog, post, comment, tag  
+ 1) Create 4 models/C# classes: Blog, Post, Comment, and Tag  
      a. Add data validation/annotations  
      b. E.g.: Required, StringLength(), DataType(), Display(), and NotMapped  
      c. Add slugs from post titles to enhance Search Engine Optimizaiton (SEO)
