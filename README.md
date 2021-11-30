@@ -3,6 +3,7 @@
 
  ## Features
  - C# ASP.NET MVC
+ - Object oriented programming
  - Secure via authentication and roles
 
  ## Build Steps
