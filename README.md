@@ -11,4 +11,5 @@
      a. Add data validation/annotations  
      b. E.g.: Required, StringLength(), DataType(), Display(), and NotMapped  
      c. Add slugs from post titles to enhance Search Engine Optimizaiton (SEO)
+     d. Create virtual properties to grab entire records of foreign keys
  2) 
