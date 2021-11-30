@@ -6,7 +6,7 @@
  - Secure via authentication and roles
 
  ## Build Steps
- 1) Create 4 models/C# classes: blog, post, comment, tag
-     a. Add data validation/annotations
-     b. E.g.: Required, StringLength(), DataType(), Display(), and NotMapped
+ 1) Create 4 models/C# classes: blog, post, comment, tag  
+     a. Add data validation/annotations  
+     b. E.g.: Required, StringLength(), DataType(), Display(), and NotMapped  
  2) 
