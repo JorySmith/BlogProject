@@ -20,7 +20,7 @@ namespace BlogProject.Models
         // Blog's primary key/unique IDs
         public int Id { get; set; }        
         // Foreign key/unique ID
-        public string AuthorId { get; set; }
+        public string AuthorId { get; set; } // Parent
 
         // Blog's name, desecription, and date of creation
         // Add data annotations/validation: Required, StringLength(), DataType(), Display(), NotMapped

@@ -13,4 +13,5 @@
      b. E.g.: Required, StringLength(), DataType(), Display(), and NotMapped  
      c. Add slugs from post titles to enhance Search Engine Optimizaiton (SEO)
      d. Create virtual navigation properties and relationships between the models
+     e. Create enums ReadyStatus for Posts, ModerationType for moderated Comments
  2) 

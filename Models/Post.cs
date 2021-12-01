@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BlogProject.Enums;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,8 @@ namespace BlogProject.Models
         // Store unique ID/primary key for each Post
         public int Id { get; set; }
         // Foreign keys for the associated Blog and Author
-        public int BlogId { get; set; }
-        public string AuthorId { get; set; }
+        public int BlogId { get; set; } // Parent
+        public string AuthorId { get; set; } // Parent
 
         // Post title, abstract, and content
         // Data annotations/validation
@@ -37,8 +38,8 @@ namespace BlogProject.Models
         [Display(Name = "Updated Date")]
         public DateTime? Updated { get; set; } // DateTiime? = nullable is okay
 
-        // Store if post is ready for public viewing
-        public bool IsReady { get; set; }
+        // Add enum ReadyStatus for different states available for Posts
+        public ReadyStatus ReadyStatus { get; set; }
         // Convert post title to a slug for URL implimentaiton for SEO benefit
         public string Slug { get; set; }
         // Post image file stored as byte[] data

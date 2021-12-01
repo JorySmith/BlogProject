@@ -13,8 +13,8 @@ namespace BlogProject.Models
         public int Id { get; set; }
 
         // Foreign keys
-        public int PostId { get; set; }
-        public string AuthorId { get; set; }
+        public int PostId { get; set; } // Parent
+        public string AuthorId { get; set; } // Parent
 
         // Tag text
         // Data annotations/validation

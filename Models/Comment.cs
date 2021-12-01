@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using BlogProject.Enums;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,9 +14,9 @@ namespace BlogProject.Models
         public int Id { get; set; }
 
         // Foreign keys/IDs: associated post, author, and moderator
-        public int PostId { get; set; }
-        public string AuthorId { get; set; }
-        public string ModeratorId { get; set; }
+        public int PostId { get; set; } // Parent
+        public string AuthorId { get; set; } // Parent
+        public string ModeratorId { get; set; } // Parent
 
         // Comment original body
         // Data annotations/validation StringLength(), Display()
@@ -35,6 +36,9 @@ namespace BlogProject.Models
         [StringLength(500, ErrorMessage = "The {0} must be at least {2} characters long and less than {1}.", MinimumLength = 2)]
         [Display(Name = "Moderated Comment")]
         public string ModeratedBody { get; set; }
+
+        // Enum reason/type for a moderated comment 
+        public ModerationType ModerationType { get; set; }
 
         // Navigation properties for foreign keys above
         // They store foreign keys entire record
