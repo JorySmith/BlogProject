@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -47,6 +48,16 @@ namespace BlogProject.Models
         // User submited image file via IFormFile over HTTP
         [NotMapped] // Don't map image to DB, convert to byte[] for storage
         public IFormFile Image { get; set; }
+
+        // Navigation virtual properties for BlogID and AuthorID
+        public virtual Blog Blog { get; set; } // Parent of Post
+        public virtual IdentityUser Author { get; set; } // Parent of Post
+
+        // Instantiate a new HashSet<>() of an ICollection of Tags and Comments
+        // A new HashSet concrete class implements the interface ICollection<Model>
+        // These are Child elements of Post
+        public virtual ICollection<Tag> Tags { get; set; } = new HashSet<Tag>();
+        public virtual ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
 
 
     }

@@ -22,9 +22,9 @@ namespace BlogProject.Models
         [StringLength(25, ErrorMessage = "The {0} must be at least {2} characters long and less than {1}.", MinimumLength = 2)]
         public string Text { get; set; }
 
-        // Virtual properties storing entire records of foreign keys
-        // Use IdentityUser type to store identities
-        public virtual Post Post { get; set; }
-        public virtual IdentityUser Author { get; set; }
+        // Navigation virtual properties that store records of foreign keys
+        // Use model name as type or IdentityUser type to store identities
+        public virtual Post Post { get; set; } // Parent of Tag 
+        public virtual IdentityUser Author { get; set; } // Parent of Tag 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,8 +17,9 @@ namespace BlogProject.Models
         // int (data type) Id (prop name) get; (props can be retrieved)
         // set; (props can be set)
 
-        // Blog's and author's unique IDs
+        // Blog's primary key/unique IDs
         public int Id { get; set; }        
+        // Foreign key/unique ID
         public string AuthorId { get; set; }
 
         // Blog's name, desecription, and date of creation
@@ -49,5 +51,12 @@ namespace BlogProject.Models
         [NotMapped] // Don't map user's submitted image to DB, use byte[] of image
         public IFormFile Image { get; set; }
 
+        // Navigation virtual properties (public virtual Type Name {})
+        // Use IdentityUser to store Author ID
+        // Use interface ICollection for collecting Posts
+        // Instantiate a new HashSet<>() of ICollection Posts 
+        // A new HashSet concrete class implements the interface ICollection<Post>
+        public virtual IdentityUser Author { get; set; } // Parent of Blog 
+        public virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>(); // Child of Blog 
     }
 }

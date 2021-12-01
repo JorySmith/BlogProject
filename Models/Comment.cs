@@ -36,11 +36,11 @@ namespace BlogProject.Models
         [Display(Name = "Moderated Comment")]
         public string ModeratedBody { get; set; }
 
-        // Navigation properties which grab entire record for foreign keys above
-        // Create virtual properties for foreign keys above
-        public virtual Post Post { get; set; }
-        public virtual IdentityUser Author { get; set; }
-        public virtual IdentityUser Moderator { get; set; }
+        // Navigation properties for foreign keys above
+        // They store foreign keys entire record
+        public virtual Post Post { get; set; } // Parent of Comment
+        public virtual IdentityUser Author { get; set; } // Parent of Comment
+        public virtual IdentityUser Moderator { get; set; } // Parent of Comment
 
     }
 }
