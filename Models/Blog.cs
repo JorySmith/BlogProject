@@ -19,7 +19,7 @@ namespace BlogProject.Models
 
         // Blog's primary key/unique IDs
         public int Id { get; set; }        
-        // Foreign key/unique ID
+        // Foreign key/unique ID for IdentityUser
         public string AuthorId { get; set; } // Parent
 
         // Blog's name, desecription, and date of creation
