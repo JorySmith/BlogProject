@@ -15,4 +15,4 @@
      d. Create virtual navigation properties and relationships between the models
      e. Create enums ReadyStatus for Posts, ModerationType for moderated Comments
      f. Create, integrate, register service, and inject BlogUser subclass of IdentityUser 
- 2) 
+ 2) Build code-first migration to be sent to DB using Entity Framework 

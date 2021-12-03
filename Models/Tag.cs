@@ -14,7 +14,7 @@ namespace BlogProject.Models
 
         // Foreign keys
         public int PostId { get; set; } // Parent
-        public string AuthorId { get; set; } // Parent
+        public string BlogUserId { get; set; } // Parent
 
         // Tag text
         // Data annotations/validation
@@ -25,6 +25,6 @@ namespace BlogProject.Models
         // Navigation virtual properties that store records of foreign keys
         // Use model name as type or IdentityUser type to store identities
         public virtual Post Post { get; set; } // Parent of Tag 
-        public virtual BlogUser Author { get; set; } // Parent of Tag 
+        public virtual BlogUser BlogUser { get; set; } // Parent of Tag 
     }
 }

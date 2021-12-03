@@ -20,7 +20,7 @@ namespace BlogProject.Models
         // Blog's primary key/unique IDs
         public int Id { get; set; }        
         // Foreign key/unique ID for IdentityUser
-        public string AuthorId { get; set; } // Parent
+        public string BlogUserId { get; set; } // Parent
 
         // Blog's name, desecription, and date of creation
         // Add data annotations/validation: Required, StringLength(), DataType(), Display(), NotMapped
@@ -56,7 +56,7 @@ namespace BlogProject.Models
         // Use interface ICollection for collecting Posts
         // Instantiate a new HashSet<>() of ICollection Posts 
         // A new HashSet concrete class implements the interface ICollection<Post>
-        public virtual BlogUser Author { get; set; } // Parent of Blog 
+        public virtual BlogUser BlogUser { get; set; } // Parent of Blog 
         public virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>(); // Child of Blog 
     }
 }

@@ -16,7 +16,7 @@ namespace BlogProject.Models
         public int Id { get; set; }
         // Foreign keys for the associated Blog and Author
         public int BlogId { get; set; } // Parent
-        public string AuthorId { get; set; } // Parent
+        public string BlogUserId { get; set; } // Parent
 
         // Post title, abstract, and content
         // Data annotations/validation
@@ -52,7 +52,7 @@ namespace BlogProject.Models
 
         // Navigation virtual properties for BlogID and AuthorID
         public virtual Blog Blog { get; set; } // Parent of Post
-        public virtual BlogUser Author { get; set; } // Parent of Post
+        public virtual BlogUser BlogUser { get; set; } // Parent of Post
 
         // Instantiate a new HashSet<>() of an ICollection of Tags and Comments
         // A new HashSet concrete class implements the interface ICollection<Model>
