@@ -56,7 +56,7 @@ namespace BlogProject.Models
         // Use interface ICollection for collecting Posts
         // Instantiate a new HashSet<>() of ICollection Posts 
         // A new HashSet concrete class implements the interface ICollection<Post>
-        public virtual IdentityUser Author { get; set; } // Parent of Blog 
+        public virtual BlogUser Author { get; set; } // Parent of Blog 
         public virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>(); // Child of Blog 
     }
 }

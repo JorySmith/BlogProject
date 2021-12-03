@@ -43,8 +43,8 @@ namespace BlogProject.Models
         // Navigation properties for foreign keys above
         // They store foreign keys of entire record
         public virtual Post Post { get; set; } // Parent of Comment
-        public virtual IdentityUser Author { get; set; } // Parent of Comment
-        public virtual IdentityUser Moderator { get; set; } // Parent of Comment
+        public virtual BlogUser Author { get; set; } // Parent of Comment
+        public virtual BlogUser Moderator { get; set; } // Parent of Comment
 
     }
 }

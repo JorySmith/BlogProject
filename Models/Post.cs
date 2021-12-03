@@ -52,7 +52,7 @@ namespace BlogProject.Models
 
         // Navigation virtual properties for BlogID and AuthorID
         public virtual Blog Blog { get; set; } // Parent of Post
-        public virtual IdentityUser Author { get; set; } // Parent of Post
+        public virtual BlogUser Author { get; set; } // Parent of Post
 
         // Instantiate a new HashSet<>() of an ICollection of Tags and Comments
         // A new HashSet concrete class implements the interface ICollection<Model>

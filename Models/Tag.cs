@@ -25,6 +25,6 @@ namespace BlogProject.Models
         // Navigation virtual properties that store records of foreign keys
         // Use model name as type or IdentityUser type to store identities
         public virtual Post Post { get; set; } // Parent of Tag 
-        public virtual IdentityUser Author { get; set; } // Parent of Tag 
+        public virtual BlogUser Author { get; set; } // Parent of Tag 
     }
 }
