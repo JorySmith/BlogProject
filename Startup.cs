@@ -29,9 +29,13 @@ namespace BlogProject
         // GetConnectionString() looks in the appsettings.json for the value to the key DefaultConnection
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add NPGSQL option to AddDbContext service after getting both NPGSQL NuGet packages
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
+                options.UseNpgsql(
                     Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseSqlServer(
+            //        Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
