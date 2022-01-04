@@ -12,16 +12,21 @@ namespace BlogProject.Controllers
 {
     public class BlogsController : Controller
     {
+        // Dependency injection of ApplicationDbContext into BlogsController starting state
+        // Enables communication with DB
         private readonly ApplicationDbContext _context;
 
+        // Constructor, context/instance of DB
         public BlogsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
+        // Controller actions/methods
         // GET: Blogs
         public async Task<IActionResult> Index()
         {
+            // Return View of a _context list of Blogs including the parent of BlogUser (Author)
             var applicationDbContext = _context.Blogs.Include(b => b.BlogUser);
             return View(await applicationDbContext.ToListAsync());
         }

@@ -41,10 +41,15 @@ namespace BlogProject
 
             // Register BlogUser in place of IdentityUser
             // removed: services.AddDefaultIdentity<IdentityUser>
+            // Add default UI and Token Providers services
             services.AddIdentity<BlogUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();            
-
+                .AddDefaultUI()
+                .AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
+
+            // Add Razor pages service
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
