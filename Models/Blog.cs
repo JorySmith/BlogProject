@@ -35,7 +35,7 @@ namespace BlogProject.Models
         [Display(Name = "Created Date")] // Data name label
         public DateTime Created { get; set; }
 
-        // Last date blog was updated, add "?" = can store
+        // Last date blog was updated, add "?" = can store a
         // null value if blog hasn't been updated yet
         [DataType(DataType.Date)] // Change DataType display to Date
         [Display(Name = "Updated Date")] // Data name label
@@ -46,7 +46,7 @@ namespace BlogProject.Models
         // Capture user's submitted image via IFormFile over HTTP
         [Display(Name = "Blog Brand Image")] // Data name label
         public byte[] ImageData { get; set; }
-        [Display(Name = "Blog Brand Image File Type")] // Data name label
+        [Display(Name = "Image File Type")] // Data name label
         public string ContentType { get; set; }
         [NotMapped] // Don't map user's submitted image to DB, use byte[] of image
         public IFormFile Image { get; set; }
@@ -56,7 +56,8 @@ namespace BlogProject.Models
         // Use interface ICollection for collecting Posts
         // Instantiate a new HashSet<>() of ICollection Posts 
         // A new HashSet concrete class implements the interface ICollection<Post>
-        public virtual BlogUser BlogUser { get; set; } // Parent of Blog 
+        [Display(Name = "Author")]
+        public virtual BlogUser BlogUser { get; set; } // Parent of Blog, i.e. Author
         public virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>(); // Child of Blog 
     }
 }
