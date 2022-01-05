@@ -91,17 +91,17 @@ namespace BlogProject.Controllers
             {
                 return NotFound();
             }
-            ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Description", post.BlogId);
-            ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", post.BlogUserId);
+            ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Name", post.BlogId);
             return View(post);
         }
 
         // POST: Posts/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Update Bind to reflect the data the user will HTTP POST after submitting the form
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,BlogId,BlogUserId,Title,Abstract,Content,Created,Updated,ReadyStatus,Slug,ImageData,ContentType")] Post post)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,BlogId,Title,Abstract,Content,ReadyStatus,Image")] Post post)
         {
             if (id != post.Id)
             {
@@ -112,6 +112,9 @@ namespace BlogProject.Controllers
             {
                 try
                 {
+                    // Update posts Updated datetime
+                    post.Updated = DateTime.Now;
+
                     _context.Update(post);
                     await _context.SaveChangesAsync();
                 }
