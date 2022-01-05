@@ -49,7 +49,9 @@ namespace BlogProject.Controllers
         // GET: Posts/Create
         public IActionResult Create()
         {
-            ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Description");
+            // Second SelectList parameter "Id" gets sent during HTTP POST
+            // Third param "Name" is displayed to user after HTTP GET
+            ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Name");
             ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
@@ -57,18 +59,22 @@ namespace BlogProject.Controllers
         // POST: Posts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Update Bind to reflect the data the user will HTTP POST after submitting the form
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,BlogId,BlogUserId,Title,Abstract,Content,Created,Updated,ReadyStatus,Slug,ImageData,ContentType")] Post post)
+        public async Task<IActionResult> Create([Bind("BlogId,Title,Abstract,Content,ReadyStatus,Image")] Post post)
         {
             if (ModelState.IsValid)
             {
+                // Update the posts created datetime property
+                post.Created = DateTime.Now;
+
+                // Add post to the DB
                 _context.Add(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Description", post.BlogId);
-            ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", post.BlogUserId);
             return View(post);
         }
 

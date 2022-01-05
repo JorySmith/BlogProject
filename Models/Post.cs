@@ -15,6 +15,7 @@ namespace BlogProject.Models
         // Store unique ID/primary key for each Post
         public int Id { get; set; }
         // Foreign keys for the associated Blog and Author
+        [Display(Name = "Blog Name")]
         public int BlogId { get; set; } // Parent
         public string BlogUserId { get; set; } // Parent
 
