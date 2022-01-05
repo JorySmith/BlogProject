@@ -29,3 +29,4 @@
      c. Update BlogsController HTTP GET and POST for Index/Create/Edit/Details/Delete actions  
      d. Update PostsController HTTP GET and POST for Index/Create/Edit/Details/Delete actions  
      e. Update CommentsController HTTP GET and POST for Index/Create/Edit/Details/Delete actions  
+     f. Remove TagsController and Views    
