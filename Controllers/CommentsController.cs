@@ -20,44 +20,36 @@ namespace BlogProject.Controllers
         }
 
         // GET: Comments
+
+        public async Task<IActionResult> OriginalIndex()
+        {
+            var originalComments = await _context.Comments.ToListAsync();
+            return View("Index", originalComments);
+        }
+        
+        public async Task<IActionResult> ModeratedIndex()
+        {
+            // Filter where comments are moderated, i.e. moderated data is not null
+            var moderatedComments = await _context.Comments.Where(c => c.Moderated != null).ToListAsync();
+            return View("Index", moderatedComments);
+        }
+
+        /*public async Task<IActionResult> DeletedIndex()
+        {
+            var originalComments = await _context.Comments.ToListAsync();
+            return View("Index", originalComments);
+        }*/
+
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Comments.Include(c => c.BlogUser).Include(c => c.Moderator).Include(c => c.Post);
-            return View(await applicationDbContext.ToListAsync());
+            var allComments = await _context.Comments.ToListAsync();
+            return View(allComments);
         }
 
-        // GET: Comments/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var comment = await _context.Comments
-                .Include(c => c.BlogUser)
-                .Include(c => c.Moderator)
-                .Include(c => c.Post)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (comment == null)
-            {
-                return NotFound();
-            }
-
-            return View(comment);
-        }
-
-        // GET: Comments/Create
-        public IActionResult Create()
-        {
-            ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id");
-            ViewData["ModeratorId"] = new SelectList(_context.Users, "Id", "Id");
-            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Abstract");
-            return View();
-        }
+        // GET Comments/Details and Create will not be used, removed Details View       
 
         // POST: Comments/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // To protect from overposting attacks, specify properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -67,6 +59,7 @@ namespace BlogProject.Controllers
             {
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
+                // Redirect to Post Details not Comments Index
                 return RedirectToAction(nameof(Index));
             }
             ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", comment.BlogUserId);

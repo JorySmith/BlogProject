@@ -26,5 +26,6 @@
  3) Create CRUD scaffolding (controller routes and actions, views, and identity pages)  
      a. Add new controller scaffolding for these models: Blog, Comment, Post, and Tag  
      b. Add new scaffolding to "Areas/Identity/Pages" selecting all that are available  
-     c. Update BlogsController HTTP GET and POST for Index/Create/Edit/Details/Delete actions
-     d. Update PostsController HTTP GET and POST for Index/Create/Edit/Details/Delete actions
+     c. Update BlogsController HTTP GET and POST for Index/Create/Edit/Details/Delete actions  
+     d. Update PostsController HTTP GET and POST for Index/Create/Edit/Details/Delete actions  
+     e. Update CommentsController HTTP GET and POST for Index/Create/Edit/Details/Delete actions  
