@@ -30,3 +30,6 @@
      d. Update PostsController HTTP GET and POST for Index/Create/Edit/Details/Delete actions  
      e. Update CommentsController HTTP GET and POST for Index/Create/Edit/Details/Delete actions  
      f. Remove TagsController and Views  
+4) Find and implement a blog template  
+     a. Update Views: Shared _Layout and Home Index  
+     b. Update CSS, JS, and IMG files and links    
