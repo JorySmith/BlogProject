@@ -32,4 +32,5 @@
      f. Remove TagsController and Views  
 4) Find and implement a blog template  
      a. Update Views: Shared _Layout and Home Index  
-     b. Update CSS, JS, and IMG files and links    
+     b. Update CSS, JS, and IMG files and links  
+     c. Update Views: Post Details
