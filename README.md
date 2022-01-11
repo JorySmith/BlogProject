@@ -35,8 +35,8 @@
      b. Update CSS, JS, and IMG files and links  
      c. Update Views: Post Details  
 5) Create services and store in a new Services folder  
-     c. Create BlogRole enums  
-     a. Create DataService class to seed roles (admin and mod) and users  
-     b. Inject ApplicationDbContext, RoleManager, and UserManager  
+     a. Create BlogRole enums  
+     b. Create DataService class to seed roles (admin and mod) and users  
+     c. Inject ApplicationDbContext, RoleManager, and UserManager  
      d. Register DataService in Startup.cs and async call in Program.cs  
      e. Add create DB from migrations to DataService  
