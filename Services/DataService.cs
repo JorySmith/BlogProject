@@ -31,10 +31,10 @@ namespace BlogProject.Services
             // Create DB from migrations using MigrateAsync
             await _dbContext.Database.MigrateAsync();
             
-            // Seed a few user roles
+            // Seed a user roles
             await SeedRolesAsync();
 
-            // Seed users/create new users
+            // Seed users
             await SeedUsersAsync();
 
         }
@@ -67,15 +67,15 @@ namespace BlogProject.Services
             // Otherwise, create a new adminUser instance 
             var adminUser = new BlogUser()
             {
-                Email = "Jory320@gmail.com",
-                UserName = "Jory320@gmail.com",
+                Email = "JoryAdmin@gmail.com",
+                UserName = "JoryAdmin@gmail.com",
                 FirstName = "Jory",
-                LastName = "Smith",
+                LastName = "Admin",
                 PhoneNumber = "(800) 555-1212",
                 EmailConfirmed = true
             };
             // Use UserManager to create an adminUser
-            await _userManager.CreateAsync(adminUser, "asdf1234");
+            await _userManager.CreateAsync(adminUser, "Abc&123!");
 
             // Assign BlogRole.Administrator to adminUser, ensure role is a string
             await _userManager.AddToRoleAsync(adminUser, BlogRole.Administrator.ToString());
@@ -83,15 +83,15 @@ namespace BlogProject.Services
             // Create a new modUser instance 
             var modUser = new BlogUser()
             {
-                Email = "Jory320@gmail.com",
-                UserName = "Jory320@gmail.com",
+                Email = "JoryMod@gmail.com",
+                UserName = "JoryMod@gmail.com",
                 FirstName = "Jory",
-                LastName = "Smith",
+                LastName = "Moderator",
                 PhoneNumber = "(800) 555-1212",
                 EmailConfirmed = true
             };
             // Use UserManager to create a modUser
-            await _userManager.CreateAsync(modUser, "asdf1234");
+            await _userManager.CreateAsync(modUser, "Abc&123!");
 
             // Assign BlogRole.Moderator to modUser, ensure role is a string
             await _userManager.AddToRoleAsync(modUser, BlogRole.Moderator.ToString());

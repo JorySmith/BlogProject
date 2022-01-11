@@ -39,3 +39,4 @@
      a. Create DataService class to seed roles (admin and mod) and users  
      b. Inject ApplicationDbContext, RoleManager, and UserManager  
      d. Register DataService in Startup.cs and async call in Program.cs  
+     e. Add create DB from migrations to DataService  
