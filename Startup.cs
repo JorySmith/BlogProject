@@ -1,5 +1,6 @@
 using BlogProject.Data;
 using BlogProject.Models;
+using BlogProject.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,10 +33,7 @@ namespace BlogProject
             // Add NPGSQL option to AddDbContext service after getting both NPGSQL NuGet packages
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer(
-            //        Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DefaultConnection")));            
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -50,6 +48,9 @@ namespace BlogProject
 
             // Add Razor pages service
             services.AddRazorPages();
+
+            // Regsiter DataService as scoped
+            services.AddScoped<DataService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

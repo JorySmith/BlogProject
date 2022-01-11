@@ -33,4 +33,9 @@
 4) Find and implement a blog template  
      a. Update Views: Shared _Layout and Home Index  
      b. Update CSS, JS, and IMG files and links  
-     c. Update Views: Post Details
+     c. Update Views: Post Details  
+5) Create services and store in a new Services folder  
+     c. Create BlogRole enums  
+     a. Create DataService class to seed roles (admin and mod) and users  
+     b. Inject ApplicationDbContext, RoleManager, and UserManager  
+     d. Register DataService in Startup.cs and async call in Program.cs  
