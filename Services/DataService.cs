@@ -67,8 +67,8 @@ namespace BlogProject.Services
             // Otherwise, create a new adminUser instance 
             var adminUser = new BlogUser()
             {
-                Email = "JoryAdmin@gmail.com",
-                UserName = "JoryAdmin@gmail.com",
+                Email = "Joryiansmith@gmail.com",
+                UserName = "Joryiansmith@gmail.com",
                 FirstName = "Jory",
                 LastName = "Admin",
                 PhoneNumber = "(800) 555-1212",

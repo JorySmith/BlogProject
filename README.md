@@ -34,9 +34,18 @@
      a. Update Views: Shared _Layout and Home Index  
      b. Update CSS, JS, and IMG files and links  
      c. Update Views: Post Details  
-5) Create services and store in a new Services folder  
+5) Create Data service  
      a. Create BlogRole enums  
-     b. Create DataService class to seed roles (admin and mod) and users  
+     b. Create DataService class in a new Services folder to seed roles (admin and mod) and users  
      c. Inject ApplicationDbContext, RoleManager, and UserManager  
-     d. Register DataService in Startup.cs and async call in Program.cs  
-     e. Add create DB from migrations to DataService  
+     d. Register DataService in Startup.cs, add async call in Program.cs  
+     e. Add create DB from migrations to DataService       
+6) Create Email service  
+     a. Create MailSettings class in new ViewModels folder  
+     b. Update settings.json and Startup.cs  
+     c. Create interface IBlogEmailSender in Services folder  
+     d. Update Register.cshtml code behind and Startup.cs with IBlogEmailSender  
+     e. Implement IBlogEmailSender with a new EmailService class  
+     f. Use MimeMessage() to store email sender/receiver/subject properties  
+     g. Use BodyBuilder() and SmtpClient() to configure email body message and authentication  
+     h. Update ResendEmailConfirmation.cshtml with IBlogEmailSender  

@@ -1,6 +1,7 @@
 using BlogProject.Data;
 using BlogProject.Models;
 using BlogProject.Services;
+using BlogProject.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -49,8 +50,14 @@ namespace BlogProject
             // Add Razor pages service
             services.AddRazorPages();
 
-            // Regsiter DataService as scoped
+            // Regsiter and add as scoped the DataService
             services.AddScoped<DataService>();
+
+            // Register and configure a MailSettings instance from appsettings.json
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+
+            // Add scoped interface service IBlogEmailSender, implement via EmailService class
+            services.AddScoped<IBlogEmailSender, EmailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
