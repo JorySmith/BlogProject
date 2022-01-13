@@ -50,3 +50,4 @@
      g. Use BodyBuilder() and SmtpClient() to configure email body message and authentication  
      h. Update ResendEmailConfirmation.cshtml with IBlogEmailSender  
      i. Create ContactMe view model, add to Home controller  
+     j. Update Contact View, add Summernote editor to form  
