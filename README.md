@@ -53,4 +53,5 @@
      j. Update Contact View, add Summernote editor to form  
 7) Create Image service  
      a. Create interface IImageService  
-     b. Create and register concrete class BasicImageService that implements IImageService  
+     b. Create BasicImageService class that implements IImageService, register in Startup.cs  
+     c. Update BlogsController and GET and POST Create actions  

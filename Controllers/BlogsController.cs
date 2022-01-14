@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BlogProject.Data;
 using BlogProject.Models;
+using BlogProject.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlogProject.Controllers
 {
@@ -15,11 +18,15 @@ namespace BlogProject.Controllers
         // Dependency injection of ApplicationDbContext into BlogsController starting state
         // Enables communication with DB
         private readonly ApplicationDbContext _context;
+        private readonly IImageService _imageService;
+        private readonly UserManager<BlogUser> _userManager;
 
-        // Constructor, context/instance of DB
-        public BlogsController(ApplicationDbContext context)
+        // Constructor, context/instance of DB and image service
+        public BlogsController(ApplicationDbContext context, IImageService imageService, UserManager<BlogUser> userManager)
         {
             _context = context;
+            _imageService = imageService;
+            _userManager = userManager;
         }
 
         // Controller actions/methods
@@ -51,6 +58,8 @@ namespace BlogProject.Controllers
         }
 
         // GET: Blogs/Create
+        // Ensure User is logged in and authorized
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -67,6 +76,10 @@ namespace BlogProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                blog.Created = DateTime.Now;
+                blog.BlogUserId = _userManager.GetUserId(User);
+                blog.ImageData = await _imageService.EncodeImageAsync(blog.Image);
+                blog.ContentType = _imageService.ContentType(blog.Image);
                 _context.Add(blog);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
