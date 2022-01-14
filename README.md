@@ -51,5 +51,6 @@
      h. Update ResendEmailConfirmation.cshtml with IBlogEmailSender  
      i. Create ContactMe view model, add to Home controller  
      j. Update Contact View, add Summernote editor to form  
-7) Create Image service
-     a.     
+7) Create Image service  
+     a. Create interface IImageService  
+     b. Create and register concrete class BasicImageService that implements IImageService  
