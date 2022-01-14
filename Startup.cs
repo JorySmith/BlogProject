@@ -61,6 +61,9 @@ namespace BlogProject
 
             // Register interface image service and its implementation BasicImageService
             services.AddScoped<IImageService, BasicImageService>();
+
+            // Register interface slug service and its implementation BasicSlugService
+            services.AddScoped<ISlugService, BasicSlugService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BlogProject.Services
 {
-    interface ISlugService
+    public interface ISlugService
     {
         // Mandatory methods that must be implemented by concrete classes:
         string UrlFriendly(string title);
