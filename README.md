@@ -54,7 +54,7 @@
 7) Create Image service  
      a. Create interface IImageService  
      b. Create BasicImageService class that implements IImageService, register in Startup.cs  
-     c. Update BlogsController and GET and POST Create actions  
+     c. Update BlogsController and GET/POST Create actions  
 8) Create Slug service  
      a. Create interface ISlugService  
      b. Create BasicSlugService, add methods to implement string manipulation, register in Startup.cs  
