@@ -17,7 +17,7 @@ namespace BlogProject
         public static async Task Main(string[] args)
         {
             // Run DataService ManageDataAsync() every time application
-            // starts to see if roles and users need to be seeded
+            // starts to migrate DB and see if roles and users need to be seeded
             // Remove Run command, store CreateHostBuilder in var host
             var host = CreateHostBuilder(args).Build();
 
