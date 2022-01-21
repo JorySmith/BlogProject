@@ -31,7 +31,7 @@ namespace BlogProject.Services
             // Create DB from migrations using MigrateAsync
             await _dbContext.Database.MigrateAsync();
             
-            // Seed a user roles
+            // Seed user roles
             await SeedRolesAsync();
 
             // Seed users
@@ -77,7 +77,7 @@ namespace BlogProject.Services
             // Use UserManager to create an adminUser
             await _userManager.CreateAsync(adminUser, "Abc&123!");
 
-            // Assign BlogRole.Administrator to adminUser, ensure role is a string
+            // Use UserManager to add role Administrator to adminUser, ensure role is a string
             await _userManager.AddToRoleAsync(adminUser, BlogRole.Administrator.ToString());
             
             // Create a new modUser instance 

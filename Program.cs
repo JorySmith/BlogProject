@@ -16,10 +16,12 @@ namespace BlogProject
         // Update to async Task program, not void
         public static async Task Main(string[] args)
         {
-            // Remove CreateHostBuilder Run command, store in host
+            // Run DataService ManageDataAsync() every time application
+            // starts to see if roles and users need to be seeded
+            // Remove Run command, store CreateHostBuilder in var host
             var host = CreateHostBuilder(args).Build();
 
-            // Store registered DataService in dataService
+            // Pull out registered DataServce, store in var dataService
             var dataService = host.Services
                                   .CreateScope()
                                   .ServiceProvider
@@ -28,7 +30,7 @@ namespace BlogProject
             // Await call for ManageDataAsync
             await dataService.ManageDataAsync();
 
-            // Run program
+            // Run host
             host.Run();
         }
 
