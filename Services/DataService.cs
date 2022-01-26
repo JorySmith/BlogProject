@@ -71,6 +71,7 @@ namespace BlogProject.Services
                 UserName = "Joryiansmith@gmail.com",
                 FirstName = "Jory",
                 LastName = "Admin",
+                DisplayName = "Jory Smith",
                 PhoneNumber = "(800) 555-1212",
                 EmailConfirmed = true
             };
@@ -87,6 +88,7 @@ namespace BlogProject.Services
                 UserName = "JoryMod@gmail.com",
                 FirstName = "Jory",
                 LastName = "Moderator",
+                DisplayName = "Jory Smith",
                 PhoneNumber = "(800) 555-1212",
                 EmailConfirmed = true
             };

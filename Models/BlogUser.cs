@@ -17,10 +17,16 @@ namespace BlogProject.Models
         [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long and no more than {1}.", MinimumLength = 2)]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
+
         [Required]
         [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long and no more than {1}.", MinimumLength = 2)]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
+
+        [Required]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long and no more than {1}.", MinimumLength = 2)]
+        [Display(Name = "Display Name")]
+        public string DisplayName { get; set; }
 
         // User's profile picture and file type
         public byte[] Image { get; set; }

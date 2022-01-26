@@ -15,6 +15,7 @@
  3) Create CRUD scaffolding (controller routes and actions, views, and identity pages)  
  4) Find and implement a blog template  
  5) Create Data service  
- 6) Create Email service, add MailSettings appsettings.json  
+ 6) Create Email service, add MailSettings to appsettings.json  
  7) Create Image service  
  8) Create Slug service  
+ 9) Update Register code behind page  
