@@ -50,7 +50,7 @@
                 @Html.DisplayFor(modelItem => blog.Updated)
             </td>
             <td>
-                <img src="@imageService.DecodeImage(blog.ImageData, blog.ContentType)"/>                
+                <img class="img-fluid" src="@imageService.DecodeImage(blog.ImageData, blog.ContentType)"/>                
             </td>            
             <td>
                 @* asp-route-id selects specific record/id value to be retrieved *@
