@@ -19,3 +19,4 @@
  7) Create Image service  
  8) Create Slug service  
  9) Update Register code behind page  
+ 10) Update ResendEmailConf and ForgotPassword  
