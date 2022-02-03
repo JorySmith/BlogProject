@@ -50,7 +50,8 @@
                 @Html.DisplayFor(modelItem => blog.Updated)
             </td>
             <td>
-                <img class="img-fluid" src="@imageService.DecodeImage(blog.ImageData, blog.ContentType)"/>                
+                @*Decode image data byte array using image service, creates base64 string that can be viewed*@
+                <img class="img-fluid" width="200px" src="@imageService.DecodeImage(blog.ImageData, blog.ContentType)"/>                
             </td>            
             <td>
                 @* asp-route-id selects specific record/id value to be retrieved *@

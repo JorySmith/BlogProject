@@ -10,7 +10,7 @@
 <h4>Post</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-8">
         <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
@@ -32,7 +32,7 @@
                 <textarea asp-for="Abstract" class="form-control"></textarea>
                 <span asp-validation-for="Abstract" class="text-danger"></span>
             </div>
-            @*Content/body*@
+            @*Content/body, ensure summernote script is below*@
             <div class="form-group">
                 <label asp-for="Content" class="control-label"></label>
                 <textarea asp-for="Content" class="form-control"></textarea>
@@ -66,5 +66,10 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        $('#Content').summernote({
+            placeholder: "Post contents"
+        });
+    </script>
 }
