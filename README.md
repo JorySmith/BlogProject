@@ -20,6 +20,6 @@
  7) Create Image service  
  8) Create Slug service  
  9) Update Register code behind page  
- 10) Update ResendEmailConf and ForgotPassword  
+ 10) Update ResendEmailConf and ForgotPassword code behinds  
  11) Update Summernote fonts and Posts Create and Details  
  12) Update BlogsController and PostsController to incorporate IFormFile submissions/edits  
