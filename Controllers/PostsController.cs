@@ -8,18 +8,23 @@ using Microsoft.EntityFrameworkCore;
 using BlogProject.Data;
 using BlogProject.Models;
 using BlogProject.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace BlogProject.Controllers
 {
     public class PostsController : Controller
     {
+        // Private PostsController properties, store instances of DB, Slug, and Image services
         private readonly ApplicationDbContext _context;
         private readonly ISlugService _slugService;
+        private readonly IImageService _imageService;
 
-        public PostsController(ApplicationDbContext context, ISlugService slugService)
+        // Constructor for the dependencies above
+        public PostsController(ApplicationDbContext context, ISlugService slugService, IImageService imageService)
         {
             _context = context;
             _slugService = slugService;
+            _imageService = imageService;
         }
 
         // GET: Posts
@@ -52,8 +57,7 @@ namespace BlogProject.Controllers
         // GET: Posts/Create
         public IActionResult Create()
         {
-            // Second SelectList parameter "Id" gets sent during HTTP POST
-            // Third param "Name" is displayed to user after HTTP GET
+            // Store ViewData including BlogID ID and Name, and BlogUserId Id.
             ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Name");
             ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
@@ -69,8 +73,12 @@ namespace BlogProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Update the posts created datetime property
+                // Update the post's created datetime property
                 post.Created = DateTime.Now;
+
+                // Store the post's image data and content type using _imageService 
+                post.ImageData = await _imageService.EncodeImageAsync(post.Image); 
+                post.ContentType = _imageService.ContentType(post.Image);
 
                 // Create post slug, ensure it's unique, update post's slug property
                 var slug = _slugService.UrlFriendly(post.Title);
@@ -83,7 +91,7 @@ namespace BlogProject.Controllers
                 }
                 post.Slug = slug;
 
-                // Add post to the DB
+                // Add post to the DB, save changes, then redirect user back to Post Index
                 _context.Add(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -92,7 +100,7 @@ namespace BlogProject.Controllers
             return View(post);
         }
 
-        // GET: Posts/Edit/5
+        // GET: Posts/Edit/id (such as 5)
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -115,7 +123,7 @@ namespace BlogProject.Controllers
         // Update Bind to reflect the data the user will HTTP POST after submitting the form
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,BlogId,Title,Abstract,Content,ReadyStatus,Image")] Post post)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,BlogId,Title,Abstract,Content,ReadyStatus")] Post post, IFormFile newImage)
         {
             if (id != post.Id)
             {
@@ -126,10 +134,25 @@ namespace BlogProject.Controllers
             {
                 try
                 {
-                    // Update posts Updated datetime
-                    post.Updated = DateTime.Now;
+                    // Retrieve post from context DB so it can be updated
+                    var newPost = await _context.Posts.FindAsync(post.Id);
 
-                    _context.Update(post);
+                    // Update post's Updated, Title, Abstract, Content, and ReadyStatus properties with user's edits/inputs
+                    newPost.Updated = DateTime.Now;
+                    newPost.Title = post.Title;
+                    newPost.Abstract = post.Abstract;
+                    newPost.Content = post.Content;
+                    newPost.ReadyStatus = post.ReadyStatus;
+
+                    // See if user submitted a new post image, if so, encode and store using image service
+                    // Retrieve and store image's content type 
+                    if (newImage != null)
+                    {
+                        newPost.ImageData = await _imageService.EncodeImageAsync(newImage);
+                        newPost.ContentType = _imageService.ContentType(newImage);
+                    }
+
+                    // Save changes to context DB
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -143,6 +166,7 @@ namespace BlogProject.Controllers
                         throw;
                     }
                 }
+                // Redirect user back to Post Index
                 return RedirectToAction(nameof(Index));
             }
             ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Description", post.BlogId);

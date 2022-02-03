@@ -22,3 +22,4 @@
  9) Update Register code behind page  
  10) Update ResendEmailConf and ForgotPassword  
  11) Update Summernote fonts and Posts Create and Details  
+ 12) Update BlogsController and PostsController to incorporate IFormFile submissions/edits  

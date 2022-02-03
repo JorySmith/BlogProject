@@ -14,38 +14,46 @@
         <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+            @*Blog Id*@
             <div class="form-group">
                 <label asp-for="BlogId" class="control-label"></label>
                 <select asp-for="BlogId" class="form-control" asp-items="ViewBag.BlogId"></select>
                 <span asp-validation-for="BlogId" class="text-danger"></span>
             </div>
+            @*Title*@
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
+            @*Abstract*@
             <div class="form-group">
                 <label asp-for="Abstract" class="control-label"></label>
                 <textarea asp-for="Abstract" class="form-control"></textarea>
                 <span asp-validation-for="Abstract" class="text-danger"></span>
             </div>
+            @*Content/body*@
             <div class="form-group">
                 <label asp-for="Content" class="control-label"></label>
                 <textarea asp-for="Content" class="form-control"></textarea>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
+            @*Ready status*@
+            @*Add asp-items="Html.GetEnumSelectList<ReadyStatus>()", add using directive above*@
             <div class="form-group">
-                <label asp-for="ReadyStatus" class="control-label"></label>
-                @* Add asp-items="Html.GetEnumSelectList<ReadyStatus>()", add using directive above *@
+                <label asp-for="ReadyStatus" class="control-label"></label>                
                 <select asp-for="ReadyStatus" class="form-control" asp-items="Html.GetEnumSelectList<ReadyStatus>()"></select>
                 <span asp-validation-for="ReadyStatus" class="text-danger"></span>
             </div>
+            @*Image IForm file upload*@
+            @*Add input attribute type="file" for Image IFormFile, add enctype to form tag above*@
+            @*Add input attribute name="NewImage" to capture new image changes, remove asp-for="Image"*@
             <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
-                @* Add type="file" for Image IFormFile, add enctype to form above *@
-                <input type="file" asp-for="Image" class="form-control" />
+                <label asp-for="Image" class="control-label"></label>                
+                <input type="file" name="NewImage" class="form-control" />
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
+            @*Submit btn*@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
