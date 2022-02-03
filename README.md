@@ -5,7 +5,7 @@
  - Dyanmic and searchable blogs, posts, comments, and tags
  - Create, read, update, and delete (CRUD) functionality
  - ASP.NET Core Identity for security, user authentication, and roles
- - Entity Framework Core and C# code-first migration for backend database setup and itegration
+ - Entity Framework Core and C# code-first migration for backend database setup and integration
  - Backend database using PostgreSql
  - C# ASP.NET MVC design pattern
  - Object oriented programming (OOP) principles
