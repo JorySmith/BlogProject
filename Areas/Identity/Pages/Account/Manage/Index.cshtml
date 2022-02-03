@@ -9,19 +9,33 @@
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 <div class="row">
     <div class="col-md-6">
-        <form id="profile-form" method="post">
+        @*Ensure enctype attribute is applied to form because of the profile image Iformfile*@
+        <form id="profile-form" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*Username*@
             <div class="form-group">
-                <label asp-for="Username"></label>
+                <label asp-for="Username" class="form-label"></label>
                 <input asp-for="Username" class="form-control" disabled />
             </div>
+            @*Phone number, data for InputModel in IndexModel*@
             <div class="form-group">
-                <label asp-for="Input.PhoneNumber"></label>
+                <label asp-for="Input.PhoneNumber" class="form-label"></label>
                 <input asp-for="Input.PhoneNumber" class="form-control" />
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
+            @*Profile image*@
+            <div class="form-group">
+                <label asp-for="Input.Image" class="form-label"></label>
+                <input asp-for="Input.Image" type="file" class="form-control" />
+                <span asp-validation-for="Input.Image" class="text-danger"></span>
+            </div>
+            @*Submit btn*@
             <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
         </form>
+    </div>
+    <div class="col-md-6">
+        @*IndexModel CurrentImage property*@
+        <img src="@Model.CurrentImage" class="img-fluid rounded-circle" width="50%" />
     </div>
 </div>
 

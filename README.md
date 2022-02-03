@@ -21,5 +21,5 @@
  8) Create Slug service  
  9) Update Register code behind page  
  10) Update ResendEmailConf and ForgotPassword code behinds  
- 11) Update Summernote fonts and Posts Create and Details  
+ 11) Update Summernote fonts and Posts Create and Details Views  
  12) Update BlogsController and PostsController to incorporate IFormFile submissions/edits  

@@ -15,6 +15,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using BlogProject.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace BlogProject.Areas.Identity.Pages.Account
 {
@@ -25,17 +28,23 @@ namespace BlogProject.Areas.Identity.Pages.Account
         private readonly UserManager<BlogUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IBlogEmailSender _emailSender;
+        private readonly IImageService _imageService;
+        private readonly IConfiguration _configuration;
 
         public RegisterModel(
             UserManager<BlogUser> userManager,
             SignInManager<BlogUser> signInManager,
             ILogger<RegisterModel> logger,
-            IBlogEmailSender emailSender)
+            IBlogEmailSender emailSender,
+            IImageService imageService, 
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _imageService = imageService;
+            _configuration = configuration;
         }
 
         [BindProperty]
@@ -47,6 +56,9 @@ namespace BlogProject.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            [Display(Name = "Profile Image")]
+            public IFormFile ImageFile { get; set; }
+
             [Required]
             [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long and no more than {1}.", MinimumLength = 2)]
             [Display(Name = "First Name")]
@@ -91,13 +103,19 @@ namespace BlogProject.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new BlogUser 
-                { 
+                var user = new BlogUser
+                {
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
                     DisplayName = Input.DisplayName,
-                    UserName = Input.Email, 
-                    Email = Input.Email 
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    // Use IConfiguration to grab appsettings.json default user image if user didn't submit one
+                    Image = (await _imageService.EncodeImageAsync(Input.ImageFile)) ??                            
+                            await _imageService.EncodeImageAsync(_configuration["DefaultUserImage"]),
+                    ContentType = Input.ImageFile is null ?
+                                    Path.GetExtension(_configuration["DefaultUserImage"]) : 
+                                    _imageService.ContentType(Input.ImageFile) // user submitted image 
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
