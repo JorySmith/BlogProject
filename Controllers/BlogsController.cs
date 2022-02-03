@@ -10,6 +10,7 @@ using BlogProject.Models;
 using BlogProject.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace BlogProject.Controllers
 {
@@ -17,6 +18,7 @@ namespace BlogProject.Controllers
     {
         // Dependency injection of ApplicationDbContext into BlogsController starting state
         // Enables communication with DB
+        // Inject image service and user manager to enable their functionality here
         private readonly ApplicationDbContext _context;
         private readonly IImageService _imageService;
         private readonly UserManager<BlogUser> _userManager;
@@ -82,13 +84,16 @@ namespace BlogProject.Controllers
                 blog.ContentType = _imageService.ContentType(blog.Image);
                 _context.Add(blog);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                return RedirectToAction(nameof(Index));                
             }
+            
+            // Error state, collect submitted data so it can be used
             ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", blog.BlogUserId);
             return View(blog);
         }
 
-        // GET: Blogs/Edit/5
+        // GET: Blogs/Edit/id
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -105,12 +110,11 @@ namespace BlogProject.Controllers
             return View(blog);
         }
 
-        // POST: Blogs/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Blogs/Edit/id
+        // Capture any new blog image changes
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Image")] Blog blog)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Blog blog, IFormFile newImage)
         {
             if (id != blog.Id)
             {
@@ -121,7 +125,30 @@ namespace BlogProject.Controllers
             {
                 try
                 {
-                    _context.Update(blog);
+                    // Capture current instance of blog id from DB, update its properties where needed
+                    var newBlog = await _context.Blogs.FindAsync(blog.Id);
+
+                    // Update 'Updated' to now
+                    newBlog.Updated = DateTime.Now;
+
+                    // If user changed blog name, description, or image, update them
+                    if (newBlog.Name != blog.Name)
+                    {
+                        newBlog.Name = blog.Name;
+                    }
+                    
+                    if (newBlog.Description != blog.Description)
+                    {
+                        newBlog.Description = blog.Description;
+                    }
+
+                    if (newImage != null)
+                    {
+                        // Encode and save image to DB using image service
+                        newBlog.ImageData = await _imageService.EncodeImageAsync(newImage);
+                    }
+
+                    // Save changes to DB                    
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -135,6 +162,8 @@ namespace BlogProject.Controllers
                         throw;
                     }
                 }
+
+                // Return user back to Blogs Index View
                 return RedirectToAction(nameof(Index));
             }
             ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", blog.BlogUserId);

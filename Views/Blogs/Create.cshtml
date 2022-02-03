@@ -13,22 +13,26 @@
         @* Add form enctype multipart to integrate user file data  *@
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*Blog name*@
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
+            @*Blog description*@
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <textarea asp-for="Description" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
+            @*Blog image*@
             <div class="form-group">
                 <label asp-for="Image" class="control-label"></label>
-                @* Limit file types displayed when user searches for an image *@
+                @* Limit file types displayed when user searches for an image using 'accept' attribute *@
                 <input type="file" asp-for="Image" class="form-control" accept=".jpg,.jpeg,.png,.gif" />
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
+            @*Submit btn*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

@@ -2,12 +2,13 @@
  A full stack Blog web app built with C# ASP.NET MVC and PostgreSQL.  
 
  ## Features
- - Blogs, posts, comments, and tags
+ - Dyanmic and searchable blogs, posts, comments, and tags
  - Create, read, update, and delete (CRUD) functionality
- - Back end integration with a PostgreSql database
+ - ASP.NET Core Identity for security, user authentication, and roles
+ - Entity Framework Core and C# code-first migration for backend database setup and itegration
+ - Backend database using PostgreSql
  - C# ASP.NET MVC design pattern
- - Object oriented programming (OOP)
- - Secure web app using authentication and roles
+ - Object oriented programming (OOP) principles
 
  ## Build Steps
  1) Create models/C# classes: Blog, Post, Comment, Tag, and BlogUser  

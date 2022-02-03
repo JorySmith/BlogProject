@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace BlogProject.Services
 {
-    public interface IImageService // Interface methods required to be implemented by concrete classes
+    public interface IImageService 
+        // Interface methods are required to be implemented by concrete classes
+        // e.g. BasicImageService.cs for IImageService
     {
         // Take in IFormFile image, encode it, return byte array for DB storage
         Task<byte[]> EncodeImageAsync(IFormFile file);
