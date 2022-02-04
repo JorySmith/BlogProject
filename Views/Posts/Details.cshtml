@@ -15,5 +15,27 @@
     </div>
 </article>
 
+<hr />
+<!-- Post Tags -->
+<article>
+    <div class="row">
+        <div class="col text-center fw-bold h3">
+            Post Tags
+        </div>
+    </div>
+    @*For each tag in Model.Tags, display tag.text.ToLower()*@
+    <div class="row">
+        <div class="col">
+            @foreach (var tag in Model.Tags)
+           {
+               @*Achnor tag link to an asp-action Tag Index*@
+               <a asp-action="TagIndex" asp-route-tag="@tag.Text.ToLower()">#@tag.Text</a>
+           }
+        </div>
+    </div>
+</article>
+
+<hr />
+
 @*Display post's comments*@
 @*Display comment author's image*@

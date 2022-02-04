@@ -63,10 +63,10 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 d-grid">
-                                <button name="Add" type="button" class="btn btn-dark btn-sm my-1">Add Tag</button>                                
+                                <button onclick="addTag()" name="Add" type="button" class="btn btn-dark btn-sm my-1">Add Tag</button>                                
                             </div>
                             <div class="col-md-6 d-grid">                                
-                                <button name="Remove" type="button" class="btn btn-dark btn-sm my-1">Remove Tag</button>
+                                <button onclick="removeTag()" name="Remove" type="button" class="btn btn-dark btn-sm my-1">Remove Tag</button>
                             </div>
                         </div>
                     </div>
@@ -98,10 +98,13 @@
 
 @section Scripts{
 
-<script>
+    <!-- Core theme JS-->
+    <script src="/js/custom.js"></script>
 
-    $('#Content').summernote({
-        placeholder: "Post contents"
-    });
-</script>
+    <script>
+
+        $('#Content').summernote({
+            placeholder: "Post contents"
+        });
+    </script>
 }
