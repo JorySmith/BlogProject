@@ -1,5 +1,5 @@
 # Blog Project
- A full stack Blog web app built with C# ASP.NET MVC and PostgreSQL.  
+ A full stack Blog web app built with C# ASP.NET MVC, JavaScript, and PostgreSQL.  
 
  ## Features
  - Dyanmic and searchable blogs, posts, comments, and tags
