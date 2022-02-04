@@ -9,6 +9,7 @@ using BlogProject.Data;
 using BlogProject.Models;
 using BlogProject.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace BlogProject.Controllers
 {
@@ -18,13 +19,15 @@ namespace BlogProject.Controllers
         private readonly ApplicationDbContext _context;
         private readonly ISlugService _slugService;
         private readonly IImageService _imageService;
+        private readonly UserManager<BlogUser> _userManager;
 
         // Constructor for the dependencies above
-        public PostsController(ApplicationDbContext context, ISlugService slugService, IImageService imageService)
+        public PostsController(ApplicationDbContext context, ISlugService slugService, IImageService imageService, UserManager<BlogUser> userManager)
         {
             _context = context;
             _slugService = slugService;
             _imageService = imageService;
+            _userManager = userManager;
         }
 
         // GET: Posts
@@ -34,7 +37,7 @@ namespace BlogProject.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Posts/Details/5
+        // GET: Posts/Details/id (e.g. 5)
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -76,6 +79,10 @@ namespace BlogProject.Controllers
                 // Update the post's created datetime property
                 post.Created = DateTime.Now;
 
+                // Store current user's id to associate with Post later
+                var authorId = _userManager.GetUserId(User);
+                post.BlogUserId = authorId;
+
                 // Store the post's image data and content type using _imageService 
                 post.ImageData = await _imageService.EncodeImageAsync(post.Image); 
                 post.ContentType = _imageService.ContentType(post.Image);
@@ -91,9 +98,26 @@ namespace BlogProject.Controllers
                 }
                 post.Slug = slug;
 
-                // Add post to the DB, save changes, then redirect user back to Post Index
+                // Add post to the DB, await save changes, then redirect user to Posts Index
                 _context.Add(post);
                 await _context.SaveChangesAsync();
+
+                // Add post's tags, loop over each submitted tag in tagValues
+                foreach(var tagText in tagValues)
+                {
+                    // Add new tag to context DB, update PostId, BlogUserId, and Text
+                    _context.Add(new Tag()
+                    {
+                        PostId = post.Id,
+                        BlogUserId = authorId,
+                        Text = tagText
+                    });
+                }
+
+                // Await save changes to DB
+                await _context.SaveChangesAsync();
+
+                // Redirect user to Posts Index
                 return RedirectToAction(nameof(Index));
             }
             ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Description", post.BlogId);
