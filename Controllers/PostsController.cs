@@ -40,14 +40,18 @@ namespace BlogProject.Controllers
         // GET: Posts/Details/id (e.g. 5)
         public async Task<IActionResult> Details(string slug)
         {
+            // If no slug provided, return NotFound()
             if (string.IsNullOrEmpty(slug))
             {
                 return NotFound();
             }
 
+            // Find the post that belongs to slug in context DB
+            // Include parent blog, blogUser/author, and tags
             var post = await _context.Posts
                 .Include(p => p.Blog)
                 .Include(p => p.BlogUser)
+                .Include(p => p.Tags)
                 .FirstOrDefaultAsync(m => m.Slug == slug);
             if (post == null)
             {
@@ -96,9 +100,10 @@ namespace BlogProject.Controllers
                     ViewData["TagValues"] = string.Join(",", tagValues);
                     return View(post);
                 }
+
                 post.Slug = slug;
 
-                // Add post to the DB, await save changes, then redirect user to Posts Index
+                // Add post to the DB, await save changes
                 _context.Add(post);
                 await _context.SaveChangesAsync();
 
@@ -114,12 +119,13 @@ namespace BlogProject.Controllers
                     });
                 }
 
-                // Await save changes to DB
+                // Await save changes to context DB
                 await _context.SaveChangesAsync();
 
                 // Redirect user to Posts Index
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Description", post.BlogId);
             return View(post);
         }

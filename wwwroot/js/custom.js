@@ -38,3 +38,8 @@ function removeTag() {
         }
     }
 }
+
+// Using jQuery, select all tags on Posts Create View form submit so they are posted to DB
+$("form").on("submit", function () {
+    $("#TagList option").prop("selected", "selected");
+}) 
