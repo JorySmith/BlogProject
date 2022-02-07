@@ -1,16 +1,37 @@
 ﻿// Declare index and set to 0, references tag options[index] below
 let index = 0;
 
+// Add Swal mixin button
+const swalWithDarkButton = Swal.mixin({
+    customClass: {
+        confirmButton: "btn btn-danger btn-sm btn-outline-dark",
+        timer: 3000,
+        buttonsStyling: false
+    }
+})
+
 // Add post tags to select list
 function addTag() {
     // store #TagEntry input
     let tagEntry = document.getElementById("TagEntry");
 
-    // create a new select option for each tag, add to #TagList
+    // See if tag is empty or a duplicate already in TagList
+    // If so, creat alert pop up
+    let result = search(tagEntry.value);
+    if (result != null) return swalWithDarkButton.fire({
+        title: '<strong>Error</strong>',
+        text: `${result}`,
+        icon: 'info',
+        confirmButtonText:
+            '<i class="fa fa-thumbs-up"></i> Got it!',
+        confirmButtonAriaLabel: 'Thumbs up, got it!'        
+    })
+
+    // Create a new select option for each tag, add to #TagList
     let newTagOption = new Option(tagEntry.value, tagEntry.value);
     document.getElementById("TagList").options[index++] = newTagOption;
 
-    // clear out TagEntry input
+    // Clear out TagEntry input
     tagEntry.value = "";
 
     return true;
@@ -18,18 +39,28 @@ function addTag() {
 
 // Remove post tags from select list
 function removeTag() {
-    // track total tag counts with tagCount
+    // track total tag counts 
     let tagCount = 1;
+    let tagList = document.getElementById("TagList");
+    // if no tag to remove, return false
+    if (!tagList) return false;
+    // if no tags selected (tagList.selectedIndex == -1), run swalWithDarkButton.fire
+    if (tagList.selectedIndex == -1) return swalWithDarkButton.fire({
+        title: '<strong>Error</strong>',
+        text: 'Please select a tag to remove.',
+        icon: 'info',
+        confirmButtonText:
+            '<i class="fa fa-thumbs-up"></i> Got it!',
+        confirmButtonAriaLabel: 'Thumbs up, got it!'
+    })
 
-    // while tagCount > 0, get TagList, store selectedIndex
-    // if selectedIndex >= 0, set tagList.options[selectedIndex] = null; 
+    // while tagCount > 0, set selected tag option to null
+    // if tagList.selectedIndex >= 0, set tagList.options[tagList.selectedIndex] = null;
     // decrement tagCount
     // otherwiise, set tagCount to 0 and decrement index
-    while (tagCount > 0) {
-        let tagList = document.getElementById("TagList");
-        let selectedIndex = tagList.selectedIndex;
-        if (selectedIndex >= 0) {
-            tagList.options[selectedIndex] = null;
+    while (tagCount > 0) {      
+        if (tagList.selectedIndex >= 0) {
+            tagList.options[tagList.selectedIndex] = null;
             tagCount--;
             index--;
         } else {
@@ -44,7 +75,8 @@ $("form").on("submit", function () {
     $("#TagList option").prop("selected", "selected");
 })
 
-// If tagValues has tags, 
+// Set initial tags, if tagValues has tags, split tagValues into array on ","
+// Loop over array, create replaceTag function, increment index
 if (tagValues != "") {
     let tagArray = tagValues.split(",");
 
@@ -58,4 +90,23 @@ if (tagValues != "") {
 function replaceTag(tag, index) {
     let newOption = new Option(tag, tag);
     document.getElementById("TagList").options[index] = newOption;
+}
+
+// See if tag is empty or a duplicate already in TagList
+// If error, return an error string
+function search(str) {
+    if (str == "") return "Please provide a non-empty tag.";
+
+    // Store current tags in TagList
+    let tagsEl = document.getElementById("TagList");
+
+    // If there are tags, store select options 
+    // 
+    if (tagsEl) {
+        let options = tagsEl.options;
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].value == str) return `Tag "${str}" is a duplicate tag. Please provide a unique tag.`
+        }
+    }
+
 }

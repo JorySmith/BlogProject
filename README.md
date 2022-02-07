@@ -23,3 +23,5 @@
  10) Update ResendEmailConf and ForgotPassword code behinds  
  11) Update Summernote fonts and Posts Create and Details Views  
  12) Update BlogsController and PostsController to incorporate IFormFile submissions/edits  
+ 13) Add Tag functionality to PostsController and Post Views  
+ 14) Add Sweet Alert 2 functionality  
