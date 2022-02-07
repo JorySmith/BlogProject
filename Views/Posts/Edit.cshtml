@@ -15,46 +15,68 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             @*Blog Id*@
-            <div class="form-group">
+            <div class="form-group my-3">
                 <label asp-for="BlogId" class="control-label"></label>
-                <select asp-for="BlogId" class="form-control" asp-items="ViewBag.BlogId"></select>
+                <select asp-for="BlogId" class="form-select" asp-items="ViewBag.BlogId"></select>
                 <span asp-validation-for="BlogId" class="text-danger"></span>
             </div>
             @*Title*@
-            <div class="form-group">
+            <div class="form-group my-3">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             @*Abstract*@
-            <div class="form-group">
+            <div class="form-group my-3">
                 <label asp-for="Abstract" class="control-label"></label>
                 <textarea asp-for="Abstract" class="form-control"></textarea>
                 <span asp-validation-for="Abstract" class="text-danger"></span>
             </div>
             @*Content/body, ensure summernote script is below*@
-            <div class="form-group">
+            <div class="form-group my-3">
                 <label asp-for="Content" class="control-label"></label>
                 <textarea asp-for="Content" class="form-control"></textarea>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
-            @*Ready status*@
-            @*Add asp-items="Html.GetEnumSelectList<ReadyStatus>()", add using directive above*@
-            <div class="form-group">
-                <label asp-for="ReadyStatus" class="control-label"></label>                
-                <select asp-for="ReadyStatus" class="form-control" asp-items="Html.GetEnumSelectList<ReadyStatus>()"></select>
-                <span asp-validation-for="ReadyStatus" class="text-danger"></span>
+            @*Tag Entry*@
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control mb-2" id="TagEntry" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 d-grid">
+                            <button onclick="addTag()" name="Add" type="button" class="btn btn-dark btn-sm my-1">Add Tag</button>                                
+                        </div>
+                        <div class="col-md-6 d-grid">                                
+                            <button onclick="removeTag()" name="Remove" type="button" class="btn btn-dark btn-sm my-1">Remove Tag</button>
+                        </div>
+                    </div>
+                </div>
+                @*Tag Values*@
+                <div class="col d-grid">
+                    <select name="TagValues" id="TagList" multiple></select>
+                </div>                    
             </div>
             @*Image IForm file upload*@
             @*Add input attribute type="file" for Image IFormFile, add enctype to form tag above*@
             @*Add input attribute name="NewImage" to capture new image changes, remove asp-for="Image"*@
-            <div class="form-group">
+            <div class="form-group my-3">
                 <label asp-for="Image" class="control-label"></label>                
                 <input type="file" name="NewImage" class="form-control" />
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
+            @*Ready status*@
+            @*Add asp-items="Html.GetEnumSelectList<ReadyStatus>()", add using directive above*@
+            <div class="form-group my-3">
+                <label asp-for="ReadyStatus" class="control-label"></label>                
+                <select asp-for="ReadyStatus" class="form-select" asp-items="Html.GetEnumSelectList<ReadyStatus>()"></select>
+                <span asp-validation-for="ReadyStatus" class="text-danger"></span>
+            </div>            
             @*Submit btn*@
-            <div class="form-group">
+            <div class="form-group my-3">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
@@ -68,8 +90,15 @@
 @section Scripts {
     
     <script>
+        let tagValues = "@ViewData["TagValues"]";
+
+
+
         $('#Content').summernote({
             placeholder: "Post contents"
         });
     </script>
+
+    <!-- Core theme JS-->
+    <script src="/js/custom.js"></script>
 }

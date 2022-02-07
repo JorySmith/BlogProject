@@ -1,4 +1,4 @@
-﻿// declare index and set to 0, references tag options[index] below
+﻿// Declare index and set to 0, references tag options[index] below
 let index = 0;
 
 // Add post tags to select list
@@ -6,7 +6,7 @@ function addTag() {
     // store #TagEntry input
     let tagEntry = document.getElementById("TagEntry");
 
-    // create a new select option for tag, add to #TagList
+    // create a new select option for each tag, add to #TagList
     let newTagOption = new Option(tagEntry.value, tagEntry.value);
     document.getElementById("TagList").options[index++] = newTagOption;
 
@@ -42,4 +42,20 @@ function removeTag() {
 // Using jQuery, select all tags on Posts Create View form submit so they are posted to DB
 $("form").on("submit", function () {
     $("#TagList option").prop("selected", "selected");
-}) 
+})
+
+// If tagValues has tags, 
+if (tagValues != "") {
+    let tagArray = tagValues.split(",");
+
+    for (let idx = 0; idx < tagArray.length; idx++) {
+        // Add or replace tags accordingly
+        replaceTag(tagArray[idx], idx);
+        index++;
+    }
+}
+
+function replaceTag(tag, index) {
+    let newOption = new Option(tag, tag);
+    document.getElementById("TagList").options[index] = newOption;
+}

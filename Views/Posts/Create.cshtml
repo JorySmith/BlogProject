@@ -17,7 +17,7 @@
             @*Blog Id/name*@
             <div class="form-group my-3">
                 <label asp-for="BlogId" class="control-label"></label>
-                <select asp-for="BlogId" class="form-control" asp-items="ViewBag.BlogId"></select>
+                <select asp-for="BlogId" class="form-select" asp-items="ViewBag.BlogId"></select>
             </div>
             @*Post Title*@
             <div class="form-group my-3">
@@ -77,11 +77,11 @@
                 </div>
 
             </div>
-
+            @*Ready status*@
             <div class="form-group my-3">
                 <label asp-for="ReadyStatus" class="control-label"></label>
                 @* Add asp-items="Html.GetEnumList<ReadyStatus>()" *@
-                <select asp-for="ReadyStatus" asp-items="@Html.GetEnumSelectList<ReadyStatus>()" class="form-control"></select>
+                <select asp-for="ReadyStatus" asp-items="@Html.GetEnumSelectList<ReadyStatus>()" class="form-select"></select>
                 <span asp-validation-for="ReadyStatus" class="text-danger"></span>
             </div>            
             @*Submit btn*@
