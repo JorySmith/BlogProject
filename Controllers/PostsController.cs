@@ -150,13 +150,13 @@ namespace BlogProject.Controllers
             return View(post);
         }
 
-        // POST: Posts/Edit/5
+        // POST: Posts/Edit/id (such as 5)
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         // Update Bind to reflect the data the user will HTTP POST after submitting the form
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,BlogId,Title,Abstract,Content,ReadyStatus")] Post post, IFormFile newImage)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,BlogId,Title,Abstract,Content,ReadyStatus")] Post post, IFormFile newImage, List<string> tagValues)
         {
             if (id != post.Id)
             {
@@ -167,8 +167,8 @@ namespace BlogProject.Controllers
             {
                 try
                 {
-                    // Retrieve post from context DB so it can be updated
-                    var newPost = await _context.Posts.FindAsync(post.Id);
+                    // Retrieve first post and include associated tags from context DB async so post's props can be updated
+                    var newPost = await _context.Posts.Include(p => p.Tags).FirstOrDefaultAsync(p => p.Id == post.Id);
 
                     // Update post's Updated, Title, Abstract, Content, and ReadyStatus properties with user's edits/inputs
                     newPost.Updated = DateTime.Now;
@@ -183,6 +183,18 @@ namespace BlogProject.Controllers
                     {
                         newPost.ImageData = await _imageService.EncodeImageAsync(newImage);
                         newPost.ContentType = _imageService.ContentType(newImage);
+                    }
+
+                    // Remove old tags from DB, update DB with new tags and associated postId, BloguserId, and text
+                    _context.RemoveRange(newPost.Tags);
+                    foreach(var tagValue in tagValues)
+                    {
+                        _context.Add(new Tag()
+                        {
+                            PostId = post.Id,
+                            BlogUserId = newPost.BlogUserId,
+                            Text = tagValue
+                        });
                     }
 
                     // Save changes to context DB
