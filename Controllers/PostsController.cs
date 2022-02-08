@@ -93,10 +93,27 @@ namespace BlogProject.Controllers
 
                 // Create post slug, ensure it's unique, update post's slug property
                 var slug = _slugService.UrlFriendly(post.Title);
+
+                // Track whether a post error has occurred
+                var postError = false;
+
+                // If slug is null, raise model state error, update postError            
+                if (string.IsNullOrEmpty(slug))
+                {
+                    postError = true;
+                    ModelState.AddModelError("", "Please create a title.");                    
+                }
+
+                // If slug isn't unique via slug service, raise model state error for "Title", update postError                     
                 if (!_slugService.IsUnique(slug))
                 {
-                    // Create Model state error, capture user supplied Tag data, then return user to Create Post view
-                    ModelState.AddModelError("Title", "This Title is already being used. Please create a different Title.");
+                    postError = true;
+                    ModelState.AddModelError("Title", "This title is already being used. Please create a different title.");                    
+                }
+
+                // If postError, capture ViewData of TagValues, turn tagValues list into a string joined by ","
+                if (postError)
+                {
                     ViewData["TagValues"] = string.Join(",", tagValues);
                     return View(post);
                 }
@@ -151,8 +168,6 @@ namespace BlogProject.Controllers
         }
 
         // POST: Posts/Edit/id (such as 5)
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         // Update Bind to reflect the data the user will HTTP POST after submitting the form
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -167,7 +182,8 @@ namespace BlogProject.Controllers
             {
                 try
                 {
-                    // Retrieve first post and include associated tags from context DB async so post's props can be updated
+                    // Retrieve and store first post from context DB async so post's props can be updated
+                    // Include associated post tags
                     var newPost = await _context.Posts.Include(p => p.Tags).FirstOrDefaultAsync(p => p.Id == post.Id);
 
                     // Update post's Updated, Title, Abstract, Content, and ReadyStatus properties with user's edits/inputs
@@ -177,7 +193,28 @@ namespace BlogProject.Controllers
                     newPost.Content = post.Content;
                     newPost.ReadyStatus = post.ReadyStatus;
 
-                    // See if user submitted a new post image, if so, encode and store using image service
+                    // Send post.Title to slug service, store resulting slug
+                    // See if result slug matches newPost.Slug
+                    // if so, update newPost.Slug and .Title
+                    var newSlug = _slugService.UrlFriendly(post.Title);
+                    if (newSlug != newPost.Slug)
+                    {
+                        if (_slugService.IsUnique(newSlug))
+                        {
+                            newPost.Slug = newSlug;
+                            newPost.Title = post.Title;
+                        } 
+                        else
+                        {
+                            // Otherwise, raise model state error for "Title", include ViewData for TagValues
+                            // Return user to View(post) - data they submitted
+                            ModelState.AddModelError("Title", "This title is already being used. Please create a different title.");
+                            ViewData["TagValues"] = string.Join(",", post.Tags.Select(t => t.Text));
+                            return View(post);
+                        }
+                    }
+
+                    // If user submitted a new post image, if so, encode and store using image service
                     // Retrieve and store image's content type 
                     if (newImage != null)
                     {
