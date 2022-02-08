@@ -105,13 +105,14 @@ namespace BlogProject.Controllers
                 }
 
                 // If slug isn't unique via slug service, raise model state error for "Title", update postError                     
-                if (!_slugService.IsUnique(slug))
+                else if (!_slugService.IsUnique(slug))
                 {
                     postError = true;
                     ModelState.AddModelError("Title", "This title is already being used. Please create a different title.");                    
                 }
 
-                // If postError, capture ViewData of TagValues, turn tagValues list into a string joined by ","
+                // If postError, capture ViewData of TagValues to send to the View
+                // Turn tagValues list into a string joined by ","
                 if (postError)
                 {
                     ViewData["TagValues"] = string.Join(",", tagValues);

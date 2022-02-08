@@ -7,6 +7,7 @@
  - ASP.NET Core Identity for security, user authentication, and roles
  - Entity Framework Core and C# code-first migration for backend database setup and integration
  - Backend database using PostgreSql
+ - Custom routing with URL slugs and RegEx
  - C# ASP.NET MVC design pattern
  - Object oriented programming (OOP) principles
 
@@ -24,4 +25,6 @@
  11) Update Summernote fonts and Posts Create and Details Views  
  12) Update BlogsController and PostsController to incorporate IFormFile submissions/edits  
  13) Add Tag functionality to PostsController and Post Views  
- 14) Add Sweet Alert 2 functionality  
+ 14) Add Sweet Alert 2 pop-up functionality  
+ 15) Update post slug and title validation in PostsController  
+ 16) Add custom routing endpoints using slugs in Startup.cs  
