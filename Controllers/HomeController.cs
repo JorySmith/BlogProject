@@ -1,7 +1,9 @@
-﻿using BlogProject.Models;
+﻿using BlogProject.Data;
+using BlogProject.Models;
 using BlogProject.Services;
 using BlogProject.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -15,16 +17,24 @@ namespace BlogProject.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IBlogEmailSender _emailSender;
+        private readonly ApplicationDbContext _dbContext;
 
-        public HomeController(ILogger<HomeController> logger, IBlogEmailSender emailSender)
+        public HomeController(ILogger<HomeController> logger, IBlogEmailSender emailSender, ApplicationDbContext dbContext)
         {
             _logger = logger;
             _emailSender = emailSender;
+            _dbContext = dbContext;
         }
 
-        public IActionResult Index()
+        // async Task<> action
+        public async Task<IActionResult> Index()
         {
-            return View();
+            // Store blogs data from dbcontext, include BlogUser, send to the View
+            var blogs = await _dbContext.Blogs
+                .Include(b => b.BlogUser)
+                .ToListAsync();
+            
+            return View(blogs);
         }
 
         public IActionResult About()

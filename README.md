@@ -28,3 +28,4 @@
  14) Add Sweet Alert 2 pop-up functionality  
  15) Update post slug and title validation in PostsController  
  16) Add custom routing endpoints using slugs in Startup.cs  
+ 17) Update Home Index View to display blogs and add pagination  

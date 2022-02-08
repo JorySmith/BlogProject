@@ -30,11 +30,26 @@ namespace BlogProject.Controllers
             _userManager = userManager;
         }
 
-        // GET: Posts
+        // GET: Posts, a list of all posts for all blogs
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Posts.Include(p => p.Blog).Include(p => p.BlogUser);
             return View(await applicationDbContext.ToListAsync());
+        }
+
+        // GET: BlogPostIndex, a list of all posts for a specific blog
+        public async Task<IActionResult> BlogPostIndex(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            // Get associated blog posts, apply ToList
+            var posts = _context.Posts.Where(p => p.Id == id).ToList();
+
+            // Display posts in the Posts Index View
+            return View("Index", posts);
         }
 
         // GET: Posts/Details/id (e.g. 5)
