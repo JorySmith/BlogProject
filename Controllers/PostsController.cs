@@ -46,7 +46,7 @@ namespace BlogProject.Controllers
             }
 
             // Get associated blog posts, apply ToList
-            var posts = _context.Posts.Where(p => p.Id == id).ToList();
+            var posts = await _context.Posts.Where(p => p.Id == id).ToListAsync();
 
             // Display posts in the Posts Index View
             return View("Index", posts);

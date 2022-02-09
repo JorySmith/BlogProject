@@ -26,7 +26,7 @@ namespace BlogProject.Controllers
             _dbContext = dbContext;
         }
 
-        // async Task<> action
+        // async Task<IActionResult> action
         public async Task<IActionResult> Index()
         {
             // Store blogs data from dbcontext, include BlogUser, send to the View
