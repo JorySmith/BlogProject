@@ -22,17 +22,23 @@ namespace BlogProject.Controllers
         private readonly ISlugService _slugService;
         private readonly IImageService _imageService;
         private readonly UserManager<BlogUser> _userManager;
+        private readonly BlogSearchService _blogSearchService;
 
-        // Constructor for the dependencies above
-        public PostsController(ApplicationDbContext context, ISlugService slugService, IImageService imageService, UserManager<BlogUser> userManager)
+        // Constructor injection for the dependencies above
+        public PostsController(ApplicationDbContext context, 
+            ISlugService slugService, 
+            IImageService imageService, 
+            UserManager<BlogUser> userManager, 
+            BlogSearchService blogSearchService)
         {
             _context = context;
             _slugService = slugService;
             _imageService = imageService;
             _userManager = userManager;
+            _blogSearchService = blogSearchService;
         }
 
-        // GET/POST: SearchIndex 
+        // GET: SearchIndex 
         public async Task<IActionResult> SearchIndex(int? page, string searchTerm)
         {
             // Save searchTerm in ViewData
@@ -42,30 +48,8 @@ namespace BlogProject.Controllers
             var pageNumber = page ?? 1;
             var pageSize = 5;
 
-            // Get posts from DB that are production ready
-            var posts = _context.Posts
-                .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady)
-                .AsQueryable(); // in case user's search submit is empty
-            if (searchTerm != null)
-            {
-                // Search posts based on title, abstract, content, and comments
-                // For comments, search within fields: body, moderated body, bloguser firstname
-                // lastname, and email. Ensure everything is all the same case.
-                searchTerm = searchTerm.ToLower();
-                
-                posts = posts.Where(
-                    p => p.Title.ToLower().Contains(searchTerm) ||
-                    p.Abstract.ToLower().Contains(searchTerm) ||
-                    p.Content.ToLower().Contains(searchTerm) ||
-                    p.Comments.Any(c => c.Body.ToLower().Contains(searchTerm) ||
-                                        c.ModeratedBody.ToLower().Contains(searchTerm) ||
-                                        c.BlogUser.FirstName.ToLower().Contains(searchTerm) ||
-                                        c.BlogUser.LastName.ToLower().Contains(searchTerm) ||
-                                        c.BlogUser.Email.ToLower().Contains(searchTerm)));
-            }
-
-            // Order posts in descending order (most recent first)
-            posts = posts.OrderByDescending(p => p.Created);
+            // Create blog search service with search function
+            var posts = _blogSearchService.Search(searchTerm);
 
             // Await sending posts to View, also invoke ToPagedListAsync
             return View(await posts.ToPagedListAsync(pageNumber, pageSize));

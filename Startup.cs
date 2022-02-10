@@ -50,8 +50,9 @@ namespace BlogProject
             // Add Razor pages service
             services.AddRazorPages();
 
-            // Regsiter and add as scoped the DataService
+            // Regsiter and add as scoped the DataService + BlogSearchService
             services.AddScoped<DataService>();
+            services.AddScoped<BlogSearchService>();
 
             // Register and configure a MailSettings instance from appsettings.json
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
