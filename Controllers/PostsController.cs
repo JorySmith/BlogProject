@@ -10,6 +10,8 @@ using BlogProject.Models;
 using BlogProject.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using BlogProject.Enums;
+using X.PagedList;
 
 namespace BlogProject.Controllers
 {
@@ -38,18 +40,26 @@ namespace BlogProject.Controllers
         }
 
         // GET: BlogPostIndex, a list of all posts for a specific blog
-        public async Task<IActionResult> BlogPostIndex(int? id)
+        public async Task<IActionResult> BlogPostIndex(int? id, int? page) // nullable ints
         {
-            if (id == null)
+            if (id is null)
             {
                 return NotFound();
             }
 
-            // Get associated blog posts, apply ToList
-            var posts = await _context.Posts.Where(p => p.Id == id).ToListAsync();
+            // Set pageNumber to page or a default of 1, pass to ToPageListAsync
+            // Set default pageSize (num of pages to dispaly), pass to ToPageListAsync
+            var pageNumber = page ?? 1;
+            var pageSize = 5;
+
+            // Get associated posts based on post blogid and productionready, send to ToPageListAsync
+            var posts = await _context.Posts
+                .Where(p => p.BlogId == id && p.ReadyStatus == ReadyStatus.ProductionReady)
+                .OrderByDescending(p => p.Created)
+                .ToPagedListAsync(pageNumber, pageSize);
 
             // Display posts in the Posts Index View
-            return View("Index", posts);
+            return View(posts);
         }
 
         // GET: Posts/Details/id (e.g. 5)
