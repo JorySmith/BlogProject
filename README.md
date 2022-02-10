@@ -29,3 +29,4 @@
  15) Update post slug and title validation in PostsController  
  16) Add custom routing endpoints using slugs in Startup.cs  
  17) Update Home Index View to display blogs and add pagination  
+ 18) Create BlogSearchService  

@@ -60,16 +60,15 @@ namespace BlogProject.Controllers
         }
 
         // GET: Blogs/Create
-        // Ensure User is logged in and authorized
-        [Authorize]
+        // Lock down to Administrators that are logged in
+        // Use Authorize security annotation with a Roles parameter
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             return View();
         }
 
         // POST: Blogs/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         // Binds help protect against overposting attacks by selecting the only
         // accepted properties to be sent via HTTP POST
         [HttpPost]
