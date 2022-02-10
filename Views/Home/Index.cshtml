@@ -1,8 +1,11 @@
-﻿@*Make BlogProject Models data availabe to this View with using directive*@
+﻿@*Make BlogProject Models data availabe to this View with a using directive*@
 @using BlogProject.Models
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
 
-@*To use model data sent to View from the Controller, create iterable instance: IEnumerable of type Blog*@
-@model IEnumerable<Blog>
+@*To use pagedlist model, add using directive and create iterable instance*@
+@model IPagedList<Blog>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -22,7 +25,7 @@
                     </a>
                     <p class="post-meta">
                         Author:
-                        <a href="#!">@blog.BlogUser.FullName</a>
+                        <a href="#">@blog.BlogUser.FullName</a>
                         on @blog.Created.ToString("MMM dd, yyyy")
                     </p>
                 </div>
@@ -35,8 +38,21 @@
     </div>
 </div>
 
-@section Scripts {
-    <script>
+<!-- Paging controls, get NuGet Packages X.PagedList.MVC.Core and .Web.Common -->
+<div class="row">
+    <div class="col h3">
+        <!-- Page X of Y -->
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    </div>
+</div>
 
-    </script>
-}
+<div class="row">
+    <div class="col">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), 
+            new PagedListRenderOptions 
+            {
+                LiElementClasses = new string[] { "page-item" },
+                PageClasses = new string[] { "page-link" }
+            })
+    </div>
+</div>

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace BlogProject.Controllers
 {
@@ -26,15 +27,23 @@ namespace BlogProject.Controllers
             _dbContext = dbContext;
         }
 
-        // async Task<IActionResult> action
-        public async Task<IActionResult> Index()
+        // Async Task<IActionResult> action
+        public async Task<IActionResult> Index(int? page) // nullable int okay, set page default
         {
-            // Store blogs data from dbcontext, include BlogUser, send to the View
-            var blogs = await _dbContext.Blogs
-                .Include(b => b.BlogUser)
-                .ToListAsync();
+            // Set pageNumber to page or a default of 1, pass to ToPageListAsync
+            var pageNumber = page ?? 1;
+            // Set default pageSize, pass to ToPageListAsync
+            var pageSize = 5;
             
-            return View(blogs);
+            // Get NuGet package X.PagedList to use ToPagedListAsync and ref IPagedList interface
+            var blogs = _dbContext.Blogs
+                //.Where(
+                //b => b.Posts.Any(p => p.ReadyStatus == Enums.ReadyStatus.ProductionReady))
+                .Include(b => b.BlogUser)
+                .OrderByDescending(b => b.Created)
+                .ToPagedListAsync(pageNumber, pageSize);
+
+            return View(await blogs);
         }
 
         public IActionResult About()
