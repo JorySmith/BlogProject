@@ -48,8 +48,20 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="site-heading">
-                        <h1>Clean Blog</h1>
-                        <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                        <h1>Blog Title</h1>
+                        <span class="subheading">Subtitle</span>
+
+                        <!-- Search box/form -->
+                        <form asp-action="SearchIndex" asp-controller="Posts">
+                            <div class="input-group mt-5">
+                                <!-- Store search term in input attribute name="" -->
+                                <input type="text" name="SearchTerm" class="form-control" placeholder="Search Term">
+                                <div class="input-group-append">
+                                    <button class="btn btn-warning btn-sm" type="submit">Search</button>
+                                </div>
+                            </div>
+                        </form>
+
                     </div>
                 </div>
             </div>

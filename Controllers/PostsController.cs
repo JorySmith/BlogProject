@@ -32,6 +32,45 @@ namespace BlogProject.Controllers
             _userManager = userManager;
         }
 
+        // GET/POST: SearchIndex 
+        public async Task<IActionResult> SearchIndex(int? page, string searchTerm)
+        {
+            // Save searchTerm in ViewData
+            ViewData["SearchTerm"] = searchTerm;
+
+            // Pagination defaults, pass to ToPagedListAsync below
+            var pageNumber = page ?? 1;
+            var pageSize = 5;
+
+            // Get posts from DB that are production ready
+            var posts = _context.Posts
+                .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady)
+                .AsQueryable(); // in case user's search submit is empty
+            if (searchTerm != null)
+            {
+                // Search posts based on title, abstract, content, and comments
+                // For comments, search within fields: body, moderated body, bloguser firstname
+                // lastname, and email. Ensure everything is all the same case.
+                searchTerm = searchTerm.ToLower();
+                
+                posts = posts.Where(
+                    p => p.Title.ToLower().Contains(searchTerm) ||
+                    p.Abstract.ToLower().Contains(searchTerm) ||
+                    p.Content.ToLower().Contains(searchTerm) ||
+                    p.Comments.Any(c => c.Body.ToLower().Contains(searchTerm) ||
+                                        c.ModeratedBody.ToLower().Contains(searchTerm) ||
+                                        c.BlogUser.FirstName.ToLower().Contains(searchTerm) ||
+                                        c.BlogUser.LastName.ToLower().Contains(searchTerm) ||
+                                        c.BlogUser.Email.ToLower().Contains(searchTerm)));
+            }
+
+            // Order posts in descending order (most recent first)
+            posts = posts.OrderByDescending(p => p.Created);
+
+            // Await sending posts to View, also invoke ToPagedListAsync
+            return View(await posts.ToPagedListAsync(pageNumber, pageSize));
+        }
+
         // GET: Posts, a list of all posts for all blogs
         public async Task<IActionResult> Index()
         {
@@ -48,11 +87,12 @@ namespace BlogProject.Controllers
             }
 
             // Set pageNumber to page or a default of 1, pass to ToPageListAsync
-            // Set default pageSize (num of pages to dispaly), pass to ToPageListAsync
+            // Set default pageSize (num of posts to dispaly per page), pass to ToPageListAsync
             var pageNumber = page ?? 1;
             var pageSize = 5;
 
-            // Get associated posts based on post blogid and productionready, send to ToPageListAsync
+            // Get associated posts based on post blogid and productionready status
+            // send to ToPageListAsync
             var posts = await _context.Posts
                 .Where(p => p.BlogId == id && p.ReadyStatus == ReadyStatus.ProductionReady)
                 .OrderByDescending(p => p.Created)
