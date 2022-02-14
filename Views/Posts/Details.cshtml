@@ -37,5 +37,38 @@
 
 <hr />
 
-@*Display post's comments*@
-@*Display comment author's image*@
+@*Post's comments*@
+<div class="d-flex justify-content-center vw-100">
+    @*If user is logged in and authenticated, display comment form input*@
+    @if (User.Identity.IsAuthenticated)
+   {
+       <div class="commentArea">
+           <form asp-action="Create" asp-controller="Comments" method="Post" class="w-100">
+               @*Imbed the post's' foreign key using an Html helper to create a hidden input*@
+               @Html.Hidden("PostId", Model.Id)
+
+               @*Comment input*@
+               <div class="form-group w-100 d-flex flex-column align-items-center">
+                   <label for="body" class="h2 form-label fw-bold">Add Comment</label>
+                   <textarea name="body" class="form-control" rows="10" id="commentInput"></textarea>
+               </div>
+               <div class="w-100 my-2">
+                   <button type="submit" class="btn btn-dark btn-sm w-100">Submit</button>
+               </div>
+               
+            </form>
+       </div>
+       
+    }
+    @*Otherwise, tell user they can submit a comment if they log in*@
+    else
+    {
+        <div class="my-2">
+            <a class="btn btn-sm btn-dark" asp-area="Identity" asp-page="/Account/Login">
+                Login to add comments to this post 
+            </a>
+        </div>
+        
+    }
+</div>
+

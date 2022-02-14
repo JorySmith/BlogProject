@@ -31,3 +31,4 @@
  17) Update Home Index View to display blogs and add pagination  
  18) Created BlogSearchService  
  19) Added Authorize security annotations with Roles parameter for specific Views  
+ 20) Add comment functionality for on blog posts  
