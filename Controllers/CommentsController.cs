@@ -52,6 +52,8 @@ namespace BlogProject.Controllers
         // GET Comments/Details and Create will not be used, removed Details View       
 
         // POST: Comments/Create
+        // Only props to bind are associated PostId and Body of comment
+        // The rest can be dome programmatically below
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PostId,Body")] Comment comment)

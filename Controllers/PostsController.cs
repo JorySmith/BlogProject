@@ -96,12 +96,16 @@ namespace BlogProject.Controllers
             }
 
             // Find the post that belongs to slug in context DB
-            // Include parent blog, blogUser/author, and tags
+            // Include p where p is parent blog, post author/BlogUser, post tags, and
+            // comments (with associated BlogUsers)
             var post = await _context.Posts
                 .Include(p => p.Blog)
                 .Include(p => p.BlogUser)
                 .Include(p => p.Tags)
+                .Include(p => p.Comments)
+                .ThenInclude(c => c.BlogUser)
                 .FirstOrDefaultAsync(m => m.Slug == slug);
+            
             if (post == null)
             {
                 return NotFound();
