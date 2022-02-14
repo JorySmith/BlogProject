@@ -208,7 +208,10 @@ namespace BlogProject.Controllers
             }
 
             // Ensure post tags and associated blog id are captured
-            var post = await _context.Posts.Include(p => p.Tags).FirstOrDefaultAsync(p => p.Id == id);
+            var post = await _context.Posts
+                .Include(p => p.Tags)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
             if (post == null)
             {
                 return NotFound();
@@ -219,7 +222,7 @@ namespace BlogProject.Controllers
             return View(post);
         }
 
-        // POST: Posts/Edit/id (such as 5)
+        // POST: Posts/Edit/id
         // Update Bind to reflect the data the user will HTTP POST after submitting the form
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -236,7 +239,9 @@ namespace BlogProject.Controllers
                 {
                     // Retrieve and store first post from context DB async so post's props can be updated
                     // Include associated post tags
-                    var newPost = await _context.Posts.Include(p => p.Tags).FirstOrDefaultAsync(p => p.Id == post.Id);
+                    var newPost = await _context.Posts
+                        .Include(p => p.Tags)
+                        .FirstOrDefaultAsync(p => p.Id == post.Id);
 
                     // Update post's Updated, Title, Abstract, Content, and ReadyStatus properties with user's edits/inputs
                     newPost.Updated = DateTime.Now;

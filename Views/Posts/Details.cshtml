@@ -1,9 +1,11 @@
 ﻿@*Using Services to bring in interface image service*@
 @using BlogProject.Services
+@using Microsoft.AspNetCore.Identity
 @model BlogProject.Models.Post
 
 @*Inject instance of interfece IImageService*@
 @inject IImageService imageService
+@inject UserManager<BlogUser> userManager
 
 @{
     ViewData["Title"] = "Details";
@@ -48,14 +50,14 @@
     @if (User.Identity.IsAuthenticated)
    {
        <div class="commentArea">
-           <form asp-action="Create" asp-controller="Comments" method="Post" class="w-100">
-               @*Imbed the post's' foreign key using an Html helper to create a hidden input*@
+           <form asp-action="Create" asp-controller="Comments" method="POST" class="w-100">
+               @*Embed the post's Id using an Html helper to create a hidden input*@
                @Html.Hidden("PostId", Model.Id)
 
                @*Comment input*@
                <div class="form-group w-100 d-flex flex-column align-items-center">
                    <label for="body" class="h2 form-label fw-bold">Add Comment</label>
-                   <textarea name="body" class="form-control" rows="5" id="commentInput"></textarea>
+                   <textarea name="body" class="form-control" rows="5"></textarea>
                </div>
                <div class="w-100 my-2">
                    <button type="submit" class="btn btn-dark btn-sm w-100">Submit</button>
@@ -68,7 +70,7 @@
     else
     {
         <div class="my-2">
-            <a class="btn btn-sm btn-dark" asp-area="Identity" asp-page="/Account/Login">
+            <a class="btn btn-sm btn-dark" asp-area="Identity" asp-page="/Account/Login" asp-route-ReturnUrl="~/Posts/Details?slug=@Model.Slug">
                 Login to add comments to this post 
             </a>
         </div>        
@@ -77,21 +79,68 @@
 
 <hr />
 
-@*Post's comments*@
-@*Comment count*@
-<span class="btn btn-sm btn-dark my-2">@Model.Comments.Count COMMENT(S)</span>
+@*Post comment count*@
+<button id="commentSection" class="btn btn-sm btn-dark my-2 ms-3">@Model.Comments.Count COMMENT(S)</button>
 
-@*Using Razor markup, @foreach comment in Model.Comments, display user's profile picture and associated comment*@
+@*@foreach comment in Model.Comments, display user's profile picture and associated comment*@
 @foreach (var comment in Model.Comments) 
 {
-    <div class="d-flex align-items-start media media-border p-0 mb-2 bg-light">
-        @*User's profile image, decode byte array data via IIMageService instance injection*@
-        <img class="me-3 mt-3 rounded-circle postCommentImg" src="@imageService.DecodeImage(comment.BlogUser.Image, comment.BlogUser.ContentType)" />
+    @*Post comment*@
+    <div class="d-flex align-items-start media media-border p-2 mb-2 bg-light w-100">
+
+        @*User's profile image, decode img byte array via injected instance of IIMageService*@
+        <img class="mx-3 mt-3 rounded-circle postCommentImg" src="@imageService.DecodeImage(comment.BlogUser.Image, comment.BlogUser.ContentType)" />
+        
         @*User's name, formatted created date, and comment body*@ 
-        <div class="media-body">             
+        <div class="media-body w-100">             
              <h4>@comment.BlogUser.FullName</h4>
              <small><i>Posted on @comment.Created.ToString("MMM dd, yyyy")</i></small>
              <p>@comment.Body</p>
+            
+             @*If comment hasn't been moderated or deleted and the comment's user is logged in,
+                 Display comment edit button*@
+            @if (comment.Moderated is null && comment.Deleted is null && comment.BlogUserId == userManager.GetUserId(User))
+            {
+                <hr />
+                @*Button to target and toggle modal*@
+                <button data-bs-toggle="modal" data-bs-target="#editModal-@comment.Id" class="btn btn-sm btn-dark float-end fw-bold">EDIT</button>
+            }
+
          </div>
+    </div>
+
+    @*Modal*@
+    <div class="modal fade" id="editModal-@comment.Id" tabindex="-1" aria-labelledby="editModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                @*Modal header/title*@
+                <div class="modal-header">
+                    <h4 class="modal-title" id="editModalLabel">Edit Comment...</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                @*Modal body*@
+                <div class="modal-body">
+                    <form asp-controller="Comments" asp-action="Edit">
+                        @*Use html helper to pass comment's primary key/Id as a hidden input element*@
+                        @Html.Hidden("Id", comment.Id)
+
+                        <div class="form-group">
+                            <textarea name="Body" class="form-control" required>@comment.Body</textarea>
+                        </div>
+
+                        <button class="btn btn-sm btn-dark border-success fw-bold my-2" type="submit">SUBMIT</button>
+                    </form>
+                </div>
+
+                @*Modal footer*@
+                <div class="modal-footer">
+                    <button class="btn btn-sm btn-dark fw-bold my-2" type="button" data-bs-dismiss="modal">CLOSE</button>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 }
