@@ -8,7 +8,7 @@
 @using X.PagedList.Web.Common
 
 @*Inject instance of image service with an identifier*@
-@inject IImageService _imageService
+@inject IImageService imageService
 @*Inject instance of user manager of type BlogUser*@
 @inject UserManager<BlogUser> _userManager
 
@@ -27,7 +27,7 @@
         <div class="col-sm-12 col-md-6 col-lg-4 mt-2">
             <div class="card border-dark">
                 @*Blog image*@
-                <img src="@_imageService.DecodeImage(blog.ImageData, blog.ContentType)" 
+                <img src="@imageService.DecodeImage(blog.ImageData, blog.ContentType)" 
                      class="card-img-top" 
                      alt="Blog image" />
 
@@ -71,24 +71,9 @@
                         </div>
                     }
 
-                </div>
-                
+                </div>                
             </div>
         </div>
-        <!-- Post preview-->
-        <div class="post-preview">
-            <!-- Change action to BlogPostIndex, a list of associated posts for that blog.Id -->
-        <a asp-controller="Posts" asp-action="BlogPostIndex" asp-route-id="@blog.Id">
-                <h2 class="post-title">@blog.Name</h2>
-                <h3 class="post-subtitle">@blog.Description</h3>
-            </a>
-            <p class="post-meta">
-                Author: <a href="#">@blog.BlogUser.FullName</a>
-                on @blog.Created.ToString("MMM dd, yyyy")
-            </p>
-        </div>
-        <!-- Divider-->
-        <hr class="my-4" />
     }
 
 </div>

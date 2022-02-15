@@ -12,6 +12,10 @@
     max-width: 60px;
 }
 
+.form-group {
+    margin: 1rem 0;
+}
+
 /* Navigation */
 .nav {
     display: inline-block;
@@ -128,7 +132,9 @@ button.btn-sm, a.btn-sm {
 }
 
 .card-img, .card-img-top, .card-img-bottom {
-    height: 150px;
+    object-fit: cover;
+    max-height: 220px;
+    overflow: hidden;
 }
 
 /* Page styles */

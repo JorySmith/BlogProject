@@ -145,6 +145,7 @@ namespace BlogProject.Controllers
                     {
                         // Encode and save image to DB using image service
                         newBlog.ImageData = await _imageService.EncodeImageAsync(newImage);
+                        newBlog.ContentType = _imageService.ContentType(newImage);
                     }
 
                     // Save changes to DB                    
