@@ -1,4 +1,5 @@
 ﻿@*Using Services to bring in interface image service*@
+@using BlogProject.Enums
 @using BlogProject.Services
 @using Microsoft.AspNetCore.Identity
 @model BlogProject.Models.Post
@@ -94,11 +95,42 @@
         @*User's name, formatted created date, and comment body*@ 
         <div class="media-body w-100">             
              <h4>@comment.BlogUser.FullName</h4>
-             <small><i>Posted on @comment.Created.ToString("MMM dd, yyyy")</i></small>
-             <p>@comment.Body</p>
+             <small>
+                 <i>
+                     @*Check if comment has been moderated, if so, include moderated info*@
+                    @if (comment.Moderated is not null)
+                    {
+                        <span class="small">
+                            <span class="fw-bolder">
+                                Moderated <span class="text-danger fst-italic">(@comment.ModerationType.ToString().ToLower())</span>
+                            </span>
+                            : @comment.Moderated?.ToString("MMM dd, yyyy")
+                        </span>
+                    }
+                    @*Otherwise, just display comment's created date*@
+                    else
+                    {
+                        <span class="small">Posted: @comment.Created.ToString("MMM dd, yyyy")</span>
+                    }                    
+                 </i>
+             </small>
+
+             @*Display moderated body if available, otherwise original comment body*@
+            @if (string.IsNullOrEmpty(comment.Body))
+            {
+                <p>@comment.ModeratedBody</p>
+            }
+            else if (comment.Moderated is not null)
+            {
+                <p>@comment.ModeratedBody</p>
+            } 
+            else
+            {
+                <p>@comment.Body</p>
+            }
             
-             @*If comment hasn't been moderated or deleted and the comment's user is logged in,
-                 Display comment edit button*@
+            
+            @*Edit button display conditionals*@
             @if (comment.Moderated is null && comment.Deleted is null && comment.BlogUserId == userManager.GetUserId(User))
             {
                 <hr />
@@ -106,10 +138,32 @@
                 <button data-bs-toggle="modal" data-bs-target="#editModal-@comment.Id" class="btn btn-sm btn-dark float-end fw-bold">EDIT</button>
             }
 
+            @*Moderate button display conditionals*@
+            @if (User.IsInRole(BlogRole.Moderator.ToString()) && comment.Deleted is null) 
+            {
+                <hr />
+                <div class="row">
+                    <div class="col-2">
+                        @*Use dynamic loop comment.Id for data-bs-target to ensure proper Id is applied to each modal below*@
+                        <button class="btn btn-sm btn-dark fw-bold" data-bs-toggle="modal" data-bs-target="#moderateModal-@comment.Id">MODERATE</button>
+                    </div>
+                    <div class="col-2">
+                        <form asp-action="Delete" asp-controller="Comments">
+                            @*Use Html helper to send hidden inputs for commend.Id and comment.Post.Slug*@
+                            @Html.Hidden("Id", comment.Id)
+                            @Html.Hidden("Slug", comment.Post.Slug)
+                            <button class="btn btn-sm btn-dark fw-bold">DELETE</button>
+                        </form>
+                    </div>
+                </div>
+            }
+
          </div>
     </div>
 
-    @*Modal*@
+    @*Modals for Edit, Moderate, and Delete*@
+
+    @*Edit modal*@
     <div class="modal fade" id="editModal-@comment.Id" tabindex="-1" aria-labelledby="editModalLabel">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -143,4 +197,58 @@
         </div>
 
     </div>
+
+    @*Moderate modal*@
+    <div class="modal fade" id="moderateModal-@comment.Id" tabindex="-1" aria-labelledby="moderateModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                @*Modal header/title*@
+                <div class="modal-header">
+                    <h4 class="modal-title" id="moderateModalLabel">Moderate Comment...</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                @*Modal body*@
+                <div class="modal-body">
+                    <form asp-action="Moderate" asp-controller="Comments">
+                        @*Use html helper to pass comment.Id and comment.Body as a hidden input elements*@
+                        @Html.Hidden("Id", comment.Id)
+                        @Html.Hidden("Body", comment.Body)
+
+                        @*Original comment, disabled textarea*@
+                        <div class="form-group">
+                            <label class="form-label">Original Comment</label>
+                            <textarea disabled class="form-control" style="resize:none">@comment.Body</textarea>
+                        </div>
+
+                        @*Moderated comment*@
+                        <div class="form-group">
+                            <label class="form-label">Moderated Comment</label>
+                            <textarea required name="ModeratedBody" class="form-control">@comment.ModeratedBody</textarea>
+                        </div>
+
+                        @*Reason for moderation*@
+                        <div class="form-group">
+                            <label class="form-label">Reason for Moderation</label>
+                            @*Get enum select list assigned to asp-items*@
+                            <select class="form-control" asp-for="@comment.ModerationType" name="ModerationType" asp-items="Html.GetEnumSelectList<ModerationType>()"></select>
+                        </div>
+                        
+                        @*Modal footer*@
+                        <div class="row">
+                            <div class="col-6">
+                                <button class="btn w-100 btn-sm btn-dark border-success fw-bold my-2" type="submit">SUBMIT</button>
+                            </div>
+                            <div class="col-6">
+                                <button class="btn w-100 btn-sm btn-dark fw-bold my-2" type="button" data-bs-dismiss="modal">CLOSE</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 }

@@ -139,6 +139,56 @@ namespace BlogProject.Controllers
             return View(comment);
         }
 
+        // POST: Moderate Comments
+        // Bind info needed from user to moderate comment on posting of the form
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Moderate(int id, [Bind("Id,Body,ModeratedBody,ModerationType")] Comment comment)
+        {
+            if (id != comment.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                var newComment = await _context.Comments
+                    .Include(c => c.Post)
+                    .FirstOrDefaultAsync(c => c.Id == comment.Id);
+
+                // Try updating comment and save it to db, catch any DbUpdateConcurrencyException
+                try
+                {
+                    // Update comment's ModeratedBody, type, time, moderator Id
+                    newComment.ModeratedBody = comment.ModeratedBody;
+                    newComment.ModerationType = comment.ModerationType;
+                    newComment.Moderated = DateTime.Now;
+                    // Assign moderator id of user logged in via user manager
+                    newComment.ModeratorId = _userManager.GetUserId(User);
+
+                    // Save changes to db
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CommentExists(comment.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }                    
+                }
+                // Redirect user to action Details of PostsController
+                // Pass in route value via a new slug obj from newComment.Post.Slug
+                // Pass in fragment commentSection to start user at that section of the page
+                return RedirectToAction("Details", "Posts", new { slug = newComment.Post.Slug }, "commentSection");
+            }
+            return View(comment);
+        }
+
+
         // GET: Comments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
