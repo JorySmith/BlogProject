@@ -33,3 +33,4 @@
  19) Added Authorize security annotations with Roles parameter for specific Views  
  20) Add comment functionality on blog posts  
  21) Add moderate comments functionality  
+ 22) Add delete comments functionality  

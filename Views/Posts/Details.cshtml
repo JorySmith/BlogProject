@@ -149,7 +149,7 @@
                     </div>
                     <div class="col-2">
                         <form asp-action="Delete" asp-controller="Comments">
-                            @*Use Html helper to send hidden inputs for commend.Id and comment.Post.Slug*@
+                            @*Use Html helper to send hidden inputs for commend.Id and comment.Post.Slug (to redirect user after form post)*@
                             @Html.Hidden("Id", comment.Id)
                             @Html.Hidden("Slug", comment.Post.Slug)
                             <button class="btn btn-sm btn-dark fw-bold">DELETE</button>

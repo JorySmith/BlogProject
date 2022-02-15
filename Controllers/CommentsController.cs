@@ -211,16 +211,23 @@ namespace BlogProject.Controllers
         }
 
         // POST: Comments/Delete/5
+        // ActionName can be just Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, string slug)
         {
+            // Find comment in db using its id, remove it, save changes to db
             var comment = await _context.Comments.FindAsync(id);
             _context.Comments.Remove(comment);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            // Return user to action Details in the PostsController
+            // Pass route value as a new slug obj
+            // Pass fragment commentSection to start user at that section of the page
+            return RedirectToAction("Details", "Posts", new { slug }, "commentSection");
         }
 
+        // Comment exists in db or not
         private bool CommentExists(int id)
         {
             return _context.Comments.Any(e => e.Id == id);
