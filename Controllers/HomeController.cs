@@ -27,13 +27,13 @@ namespace BlogProject.Controllers
             _dbContext = dbContext;
         }
 
-        // Async Task<IActionResult> action
+        // GET: Index, Async Task<IActionResult> action
         public async Task<IActionResult> Index(int? page) // nullable int okay, set page default
         {
             // Set pageNumber to page or a default of 1, pass to ToPageListAsync
             var pageNumber = page ?? 1;
             // Set default pageSize, pass to ToPageListAsync
-            var pageSize = 5;
+            var pageSize = 3;
             
             // Get NuGet package X.PagedList to use ToPagedListAsync and ref IPagedList interface
             var blogs = _dbContext.Blogs
@@ -51,13 +51,13 @@ namespace BlogProject.Controllers
             return View();
         }
 
-        // GET Contact
+        // GET: Contact
         public IActionResult Contact()
         {
             return View();
         }
 
-        // POST Contact
+        // POST: Contact
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Contact(ContactMe model)
