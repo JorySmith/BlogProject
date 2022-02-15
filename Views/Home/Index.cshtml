@@ -51,23 +51,33 @@
                     <br />
                     @*Read posts*@
                     <div class="text-center">
-                        <a class="btn btn-dark btn-sm mb-2" asp-action="BlogPostIndex" asp-controller="Posts" asp-route-id="@blog.Id">
+                        <a class="btn btn-dark btnWide mb-2" 
+                            asp-action="BlogPostIndex" 
+                            asp-controller="Posts" 
+                            asp-route-id="@blog.Id">
                             Read posts
                         </a>
                     </div>
 
                     @*If logged in user is an admin, display Create Post and Edit Blog buttons*@
+                    @*Create post*@
                     @if (User.IsInRole(BlogRole.Administrator.ToString()))
                     {
                         <div class="text-center">
-                            <a class="btn btn-dark btn-sm mb-2" asp-action="Create" asp-controller="Posts" asp-route-id="@blog.Id">Create Post</a>
+                            <a class="btn btn-dark btnWide mb-2" 
+                                asp-action="Create" 
+                                asp-controller="Posts" 
+                                asp-route-id="@blog.Id">Create Post</a>
                         </div>
                     }
-                    
+                    @*Edit blog*@
                     @if (User.IsInRole(BlogRole.Administrator.ToString()))
                     {
                         <div class="text-center">
-                            <a class="btn btn-dark btn-sm mb-2" asp-action="Edit" asp-controller="Blogs" asp-route-id="@blog.Id">Edit Blog</a>
+                            <a class="btn btn-dark btnWide mb-2" 
+                                asp-action="Edit" 
+                                asp-controller="Blogs" 
+                                asp-route-id="@blog.Id">Edit Blog</a>
                         </div>
                     }
 
@@ -80,8 +90,8 @@
 
 
 <!-- Paging controls, get NuGet Packages X.PagedList.MVC.Core and .Web.Common -->
-<div class="row">
-    <div class="col h3">
+<div class="row mt-4 text-start">
+    <div class="col h5">
         <!-- Page X of Y -->
         Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
     </div>

@@ -87,6 +87,7 @@ header.masthead .site-heading {
 
 .btnWide, .btn-tag {
     width: 100%;
+    border-radius: 10px;
 }
 
 button.btn-sm, a.btn-sm {
@@ -95,7 +96,8 @@ button.btn-sm, a.btn-sm {
 }
 
 .btn-dark:hover {
-    border: 4px solid #ff993b;
+    background-color: #ff993b;
+    border: 1px solid #ff993b;
 }
 
 .btn-warning {
