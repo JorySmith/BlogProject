@@ -25,10 +25,10 @@ namespace BlogProject.Controllers
         private readonly BlogSearchService _blogSearchService;
 
         // Constructor injection for the dependencies above
-        public PostsController(ApplicationDbContext context, 
-            ISlugService slugService, 
-            IImageService imageService, 
-            UserManager<BlogUser> userManager, 
+        public PostsController(ApplicationDbContext context,
+            ISlugService slugService,
+            IImageService imageService,
+            UserManager<BlogUser> userManager,
             BlogSearchService blogSearchService)
         {
             _context = context;
@@ -105,7 +105,7 @@ namespace BlogProject.Controllers
                 .Include(p => p.Comments)
                 .ThenInclude(c => c.BlogUser)
                 .FirstOrDefaultAsync(m => m.Slug == slug);
-            
+
             if (post == null)
             {
                 return NotFound();
@@ -139,7 +139,7 @@ namespace BlogProject.Controllers
                 post.BlogUserId = authorId;
 
                 // Store the post's image data and content type using _imageService 
-                post.ImageData = await _imageService.EncodeImageAsync(post.Image); 
+                post.ImageData = await _imageService.EncodeImageAsync(post.Image);
                 post.ContentType = _imageService.ContentType(post.Image);
 
                 // Create post slug, ensure it's unique, update post's slug property
@@ -152,14 +152,14 @@ namespace BlogProject.Controllers
                 if (string.IsNullOrEmpty(slug))
                 {
                     postError = true;
-                    ModelState.AddModelError("", "Please create a title.");                    
+                    ModelState.AddModelError("", "Please create a title.");
                 }
 
                 // If slug isn't unique via slug service, raise model state error for "Title", update postError                     
                 else if (!_slugService.IsUnique(slug))
                 {
                     postError = true;
-                    ModelState.AddModelError("Title", "This title is already being used. Please create a different title.");                    
+                    ModelState.AddModelError("Title", "This title is already being used. Please create a different title.");
                 }
 
                 // If postError, capture ViewData of TagValues to send to the View
@@ -177,7 +177,7 @@ namespace BlogProject.Controllers
                 await _context.SaveChangesAsync();
 
                 // Add post's tags, loop over each submitted tag in tagValues
-                foreach(var tagText in tagValues)
+                foreach (var tagText in tagValues)
                 {
                     // Add new tag to context DB, update PostId, BlogUserId, and Text
                     _context.Add(new Tag()
@@ -260,7 +260,7 @@ namespace BlogProject.Controllers
                         {
                             newPost.Slug = newSlug;
                             newPost.Title = post.Title;
-                        } 
+                        }
                         else
                         {
                             // Otherwise, raise model state error for "Title", include ViewData for TagValues
@@ -281,7 +281,7 @@ namespace BlogProject.Controllers
 
                     // Remove old tags from DB, update DB with new tags and associated postId, BloguserId, and text
                     _context.RemoveRange(newPost.Tags);
-                    foreach(var tagValue in tagValues)
+                    foreach (var tagValue in tagValues)
                     {
                         _context.Add(new Tag()
                         {

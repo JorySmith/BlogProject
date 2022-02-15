@@ -116,19 +116,14 @@
              </small>
 
              @*Display moderated body if available, otherwise original comment body*@
-            @if (string.IsNullOrEmpty(comment.Body))
+            @if (comment.Moderated is not null)
             {
                 <p>@comment.ModeratedBody</p>
-            }
-            else if (comment.Moderated is not null)
-            {
-                <p>@comment.ModeratedBody</p>
-            } 
+            }            
             else
             {
                 <p>@comment.Body</p>
-            }
-            
+            }            
             
             @*Edit button display conditionals*@
             @if (comment.Moderated is null && comment.Deleted is null && comment.BlogUserId == userManager.GetUserId(User))

@@ -1,42 +1,98 @@
 ﻿@*Make BlogProject Models data availabe to this View with a using directive*@
 @using BlogProject.Models
+@using BlogProject.Services
+@using BlogProject.Enums
+@using Microsoft.AspNetCore.Identity
 @using X.PagedList
 @using X.PagedList.Mvc.Core
 @using X.PagedList.Web.Common
 
-@*To use pagedlist model, add using directive and create iterable instance*@
+@*Inject instance of image service with an identifier*@
+@inject IImageService _imageService
+@*Inject instance of user manager of type BlogUser*@
+@inject UserManager<BlogUser> _userManager
+
+@*To use pagedlist model of type Blog, add using directive and iterable @model *@
 @model IPagedList<Blog>
 
 @{
     ViewData["Title"] = "Home Page";
 }
-<div class="container px-4 px-lg-5">
-    <div class="row gx-4 gx-lg-5 justify-content-center">
-        <div class="col-md-10 col-lg-8 col-xl-7">
-            <!-- For each blog in <Blog> Model, create a blog -->
-            @foreach(var blog in Model)
-            {
-                <!-- Post preview-->
-                <div class="post-preview">
-                    <!-- Change action to BlogPostIndex, a list of associated posts for that blog.Id -->
-                    <a asp-controller="Posts" asp-action="BlogPostIndex" asp-route-id="@blog.Id">
-                        <h2 class="post-title">@blog.Name</h2>
-                        <h3 class="post-subtitle">@blog.Description</h3>
-                    </a>
-                    <p class="post-meta">
-                        Author:
-                        <a href="#">@blog.BlogUser.FullName</a>
-                        on @blog.Created.ToString("MMM dd, yyyy")
-                    </p>
+
+
+<div class="row">
+    <!-- For each blog in <Blog> Model, create a blog -->
+    @foreach (var blog in Model)
+    {
+        <div class="col-sm-12 col-md-6 col-lg-4 mt-2">
+            <div class="card border-dark">
+                @*Blog image*@
+                <img src="@_imageService.DecodeImage(blog.ImageData, blog.ContentType)" 
+                     class="card-img-top" 
+                     alt="Blog image" />
+
+                <div class="card-body text-center">
+                    @*Title*@
+                    <div class="bg-warning">
+                        <hr class="card-hr" />
+                        <h5 class="card-title">@blog.Name</h5>
+                        <hr class="card-hr" />
+                    </div>
+                    @*Description*@
+                    <div>
+                        <p class="card-text cftooltip"
+                           data-bs-toggle="tooltip"
+                           data-placement="top"
+                           title=""
+                           data-original-title="@blog.Description">
+                            @blog.Description
+                        </p>
+                    </div>
+                    <br />
+                    @*Read posts*@
+                    <div class="text-center">
+                        <a class="btn btn-dark btn-sm mb-2" asp-action="BlogPostIndex" asp-controller="Posts" asp-route-id="@blog.Id">
+                            Read posts
+                        </a>
+                    </div>
+
+                    @*If logged in user is an admin, display Create Post and Edit Blog buttons*@
+                    @if (User.IsInRole(BlogRole.Administrator.ToString()))
+                    {
+                        <div class="text-center">
+                            <a class="btn btn-dark btn-sm mb-2" asp-action="Create" asp-controller="Posts" asp-route-id="@blog.Id">Create Post</a>
+                        </div>
+                    }
+                    
+                    @if (User.IsInRole(BlogRole.Administrator.ToString()))
+                    {
+                        <div class="text-center">
+                            <a class="btn btn-dark btn-sm mb-2" asp-action="Edit" asp-controller="Blogs" asp-route-id="@blog.Id">Edit Blog</a>
+                        </div>
+                    }
+
                 </div>
-                <!-- Divider-->
-                <hr class="my-4" />
-            }    
-            <!-- Pager-->
-            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
+                
+            </div>
         </div>
-    </div>
+        <!-- Post preview-->
+        <div class="post-preview">
+            <!-- Change action to BlogPostIndex, a list of associated posts for that blog.Id -->
+        <a asp-controller="Posts" asp-action="BlogPostIndex" asp-route-id="@blog.Id">
+                <h2 class="post-title">@blog.Name</h2>
+                <h3 class="post-subtitle">@blog.Description</h3>
+            </a>
+            <p class="post-meta">
+                Author: <a href="#">@blog.BlogUser.FullName</a>
+                on @blog.Created.ToString("MMM dd, yyyy")
+            </p>
+        </div>
+        <!-- Divider-->
+        <hr class="my-4" />
+    }
+
 </div>
+
 
 <!-- Paging controls, get NuGet Packages X.PagedList.MVC.Core and .Web.Common -->
 <div class="row">
@@ -48,11 +104,34 @@
 <!-- Clickable page navigation -->
 <div class="row">
     <div class="col">
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), 
-            new PagedListRenderOptions 
-            {
-                LiElementClasses = new string[] { "page-item" },
-                PageClasses = new string[] { "page-link" }
-            })
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
+        new PagedListRenderOptions
+        {
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" }
+        })
     </div>
 </div>
+
+@section Scripts {
+
+<script>
+    var swalMsg = '@TempData["SweetAlert"]'
+
+    if (swalMsg != "") {
+        swalMsg.fire({
+            icon: 'success',
+            title: swalMsg,
+            timer: 2500
+        })
+    }
+
+
+    $(document).ready(function () {
+        $("p").tooltip();
+    })
+
+
+</script>
+
+}

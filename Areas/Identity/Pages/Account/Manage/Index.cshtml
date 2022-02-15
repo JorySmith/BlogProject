@@ -17,6 +17,11 @@
                 <label asp-for="Username" class="form-label"></label>
                 <input asp-for="Username" class="form-control" disabled />
             </div>
+            @*Role*@
+            <div class="form-group">
+                <label asp-for="Role" class="form-label"></label>
+                <input asp-for="Role" class="form-control" disabled />
+            </div>
             @*Phone number, data for InputModel in IndexModel*@
             <div class="form-group">
                 <label asp-for="Input.PhoneNumber" class="form-label"></label>
@@ -28,7 +33,7 @@
                 <label asp-for="Input.Image" class="form-label"></label>
                 <input asp-for="Input.Image" type="file" class="form-control" />
                 <span asp-validation-for="Input.Image" class="text-danger"></span>
-            </div>
+            </div>   
             @*Submit btn*@
             <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
         </form>

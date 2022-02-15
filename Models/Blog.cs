@@ -18,7 +18,7 @@ namespace BlogProject.Models
         // set; (props can be set)
 
         // Blog's primary key/unique IDs
-        public int Id { get; set; }        
+        public int Id { get; set; }
         // Foreign key/unique ID for IdentityUser
         public string BlogUserId { get; set; } // Parent
 
@@ -29,8 +29,8 @@ namespace BlogProject.Models
         public string Name { get; set; }
         [Required]
         [StringLength(500, ErrorMessage = "The {0} must be at least {2} characters long and less than {1}.", MinimumLength = 4)]
-        public string Description { get; set; }   
-        
+        public string Description { get; set; }
+
         [DataType(DataType.Date)] // Change DataType display to Date
         [Display(Name = "Created Date")] // Data name label
         public DateTime Created { get; set; }

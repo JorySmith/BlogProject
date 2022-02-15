@@ -3,11 +3,12 @@
 
  ## Features
  - Dyanmic and searchable blogs, posts, comments, and tags
+ - Backend database using PostgreSql
  - Create, read, update, and delete (CRUD) functionality
  - ASP.NET Core Identity for security, user authentication, and roles
  - Entity Framework Core and C# code-first migration for backend database setup and integration
- - Backend database using PostgreSql
- - Custom routing with URL slugs and RegEx
+ - Pagination using NuGet packages
+ - Custom routing with URL slugs created with RegEx
  - C# ASP.NET MVC design pattern
  - Object oriented programming (OOP) principles
 
@@ -34,3 +35,4 @@
  20) Add comment functionality on blog posts  
  21) Add moderate comments functionality  
  22) Add delete comments functionality  
+ 23) Update landing page  

@@ -20,7 +20,8 @@ namespace BlogProject.Areas.Identity.Pages.Account.Manage
 
         public IndexModel(
             UserManager<BlogUser> userManager,
-            SignInManager<BlogUser> signInManager, IImageService imageService)
+            SignInManager<BlogUser> signInManager, 
+            IImageService imageService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -30,6 +31,8 @@ namespace BlogProject.Areas.Identity.Pages.Account.Manage
         public string Username { get; set; }
 
         public string CurrentImage { get; set; }
+
+        public string Role {  get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -50,13 +53,22 @@ namespace BlogProject.Areas.Identity.Pages.Account.Manage
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var role = await _userManager.GetRolesAsync(user);
+            if (role.Count != 0)
+            {
+                Role = role[0].ToString();
+            } else
+            {
+                Role = "Guest";
+            } 
 
             Username = userName;
             CurrentImage = _imageService.DecodeImage(user.Image, user.ContentType);
+            
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber                
             };
         }
 
