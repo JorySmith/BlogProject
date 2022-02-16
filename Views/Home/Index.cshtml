@@ -16,7 +16,7 @@
 @model IPagedList<Blog>
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Blog Project";
 }
 
 
@@ -92,7 +92,7 @@
 <!-- Paging controls, get NuGet Packages X.PagedList.MVC.Core and .Web.Common -->
 <div class="row mt-4 text-start">
     <div class="col h5">
-        <!-- Page X of Y -->
+        <!-- Page X of Y Text -->
         Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
     </div>
 </div>

@@ -109,7 +109,7 @@ button.btn-sm, a.btn-sm {
     .btn-warning:hover {
         color: white;
         background-color: #212121;
-        outline: 4px solid #ff993b;
+        border: 1px solid #212121;
     }
 
 /* Card styles */

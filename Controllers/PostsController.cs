@@ -73,7 +73,7 @@ namespace BlogProject.Controllers
             // Set pageNumber to page or a default of 1, pass to ToPageListAsync
             // Set default pageSize (num of posts to dispaly per page), pass to ToPageListAsync
             var pageNumber = page ?? 1;
-            var pageSize = 5;
+            var pageSize = 6;
 
             // Get associated posts based on post blogid and productionready status
             // send to ToPageListAsync
