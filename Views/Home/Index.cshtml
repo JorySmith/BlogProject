@@ -25,18 +25,16 @@
     @foreach (var blog in Model)
     {
         <div class="col-sm-12 col-md-6 col-lg-4 mt-2">
-            <div class="card border-dark">
-                @*Blog image*@
-                <img src="@imageService.DecodeImage(blog.ImageData, blog.ContentType)" 
-                     class="card-img-top" 
-                     alt="Blog image" />
+            <div class="card border-dark">                
 
                 <div class="card-body text-center">
-                    @*Title*@
-                    <div class="bg-warning">
-                        <hr class="card-hr" />
-                        <h5 class="card-title">@blog.Name</h5>
-                        <hr class="card-hr" />
+                    @*Blog image*@
+                    <img src="@imageService.DecodeImage(blog.ImageData, blog.ContentType)" 
+                         class="card-img-top" 
+                         alt="Blog image" />
+                    @*Blog name*@
+                    <div class="title d-flex justify-content-center align-items-center">                        
+                        <h5 class="card-title">@blog.Name</h5>                        
                     </div>
                     @*Description*@
                     <div>

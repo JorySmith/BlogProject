@@ -126,16 +126,20 @@ button.btn-sm, a.btn-sm {
     overflow: hidden;
 }
 
+.title {
+    height: 50px;
+    background-color: orange;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
 .card-title {
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    margin: 0;
 }
 
 .card-img, .card-img-top, .card-img-bottom {
     object-fit: cover;
-    max-height: 220px;
+    max-height: 200px;
     overflow: hidden;
 }
 

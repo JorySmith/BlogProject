@@ -26,13 +26,11 @@
         }
 
         <div class="col-sm-12 col-md-6 col-lg-4 mt-2">
-            <div class="card border-dark">
-                <div class="card-body text-center">
+            <div class="card border-dark h-100">
+                <div class="card-body d-flex flex-column justify-content-between text-center">
                     @*Title*@
-                    <div class="bg-warning">
-                        <hr class="card-hr" />                        
-                        <h5 class="card-title">@post.Title</h5>
-                        <hr class="card-hr" />
+                    <div class="title d-flex justify-content-center align-items-center">                                               
+                        <h5 class="card-title">@post.Title</h5>              
                     </div>
                     @*Abstract*@
                     <div>
@@ -57,13 +55,12 @@
                                 asp-route-id="@post.Id">Edit Post</a>
                         </div>
                     }
-                </div>
-                @*Blog image*@
-                <img class="card-img-bottom" 
-                     src="@imageService.DecodeImage(post.ImageData, post.ContentType)" 
-                     alt="Post image" />
+                    @*Blog image*@
+                    <img class="card-img-bottom mt-1" 
+                         src="@imageService.DecodeImage(post.ImageData, post.ContentType)" 
+                         alt="Post image" />
+                </div>                
             </div>
-
         </div>
     }
 </div>
