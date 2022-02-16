@@ -214,11 +214,11 @@ namespace BlogProject.Controllers
         // ActionName can be just Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id, string slug)
+        public async Task<IActionResult> DeleteConfirmed([Bind("Id")] Comment comment, string slug)
         {
             // Find comment in db using its id, remove it, save changes to db
-            var comment = await _context.Comments.FindAsync(id);
-            _context.Comments.Remove(comment);
+            var deleteComment = await _context.Comments.FindAsync(comment.Id);
+            _context.Comments.Remove(deleteComment);
             await _context.SaveChangesAsync();
 
             // Return user to action Details in the PostsController

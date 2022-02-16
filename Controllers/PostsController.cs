@@ -86,32 +86,40 @@ namespace BlogProject.Controllers
             return View(posts);
         }
 
-        // GET: Posts/Details/id (e.g. 5)
+        // GET: Posts/Details/id 
         public async Task<IActionResult> Details(string slug)
         {
+            // Update and pass page title
+            ViewData["Title"] = "Blog Post";
+
             // If no slug provided, return NotFound()
-            if (string.IsNullOrEmpty(slug))
-            {
-                return NotFound();
-            }
+            if (string.IsNullOrEmpty(slug)) return NotFound();
 
             // Find the post that belongs to slug in context DB
-            // Include p where p is parent blog, post author/BlogUser, post tags, and
-            // comments (with associated BlogUsers)
-            var post = await _context.Posts
-                .Include(p => p.Blog)
+            // Include post author/BlogUser, tags, and comments
+            // Collect authors of comments and moderators of comments
+            var post = await _context.Posts                
                 .Include(p => p.BlogUser)
                 .Include(p => p.Tags)
                 .Include(p => p.Comments)
                 .ThenInclude(c => c.BlogUser)
+                .Include(p => p.Comments)
+                .ThenInclude(c => c.Moderator)
                 .FirstOrDefaultAsync(m => m.Slug == slug);
 
-            if (post == null)
-            {
-                return NotFound();
-            }
+            if (post == null) return NotFound();
 
-            return View(post);
+            // Create instance of PostDetailViewModel
+            // Store Post and distinct Tags
+            var dataVM = new PostDetailViewModel()
+            {
+                Post = post,
+                Tags = _context.Tags
+                        .Select(t => t.Text.ToLower())
+                        .Distinct().ToList()
+            };
+
+            return View(dataVM);
         }
 
         // GET: Posts/Create

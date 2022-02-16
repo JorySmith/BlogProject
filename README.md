@@ -35,4 +35,4 @@
  20) Add comment functionality on blog posts  
  21) Add moderate comments functionality  
  22) Add delete comments functionality  
- 23) Update landing page  
+ 23) Update landing, BlogPostIndex, and Post Details pages  
