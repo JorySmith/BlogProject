@@ -18,7 +18,7 @@
 
  ## Build Steps
  1) Create models/C# classes: Blog, Post, Comment, Tag, and BlogUser  
- 2) Create code-first migration, connect to local PostgreSQL database via appsettings.json DefaultConnection      
+ 2) Create code-first migrations, connect to local PostgreSQL database via appsettings.json DefaultConnection      
  3) Create CRUD scaffolding (controller routes and actions, views, and identity pages)  
  4) Find and implement a blog template  
  5) Create Data service  

@@ -21,13 +21,14 @@ namespace BlogProject
             // Remove Run command, store CreateHostBuilder in var host
             var host = CreateHostBuilder(args).Build();
 
-            // Pull out registered DataServce, store in var dataService
+            // GetRequiredService DataService, store in var dataService
+            // Call ManageDataAsync() to create db from migrations
             var dataService = host.Services
                                   .CreateScope()
                                   .ServiceProvider
                                   .GetRequiredService<DataService>();
 
-            // Await call for ManageDataAsync
+            // Await call for ManageDataAsync, aka update db
             await dataService.ManageDataAsync();
 
             // Run host
