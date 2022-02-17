@@ -189,7 +189,7 @@ namespace BlogProject.Controllers
         }
 
 
-        // GET: Comments/Delete/5
+        // GET: Comments/Delete/id
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

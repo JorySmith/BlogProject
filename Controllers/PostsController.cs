@@ -75,12 +75,22 @@ namespace BlogProject.Controllers
             var pageNumber = page ?? 1;
             var pageSize = 6;
 
+            // Get blog to access blog image, name, and description
+            var blog = await _context.Blogs
+                .Where(b => b.Id == id)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
             // Get associated posts based on post blogid and productionready status
             // send to ToPageListAsync
             var posts = await _context.Posts
                 .Where(p => p.BlogId == id && p.ReadyStatus == ReadyStatus.ProductionReady)
                 .OrderByDescending(p => p.Created)
                 .ToPagedListAsync(pageNumber, pageSize);
+
+            // Add ViewData for blog image, name, and description
+            ViewData["HeaderImage"] = _imageService.DecodeImage(blog.ImageData, blog.ContentType);
+            ViewData["HeaderTitleText"] = blog.Name;
+            ViewData["HeaderSubText"] = blog.Description;
 
             // Display posts in the Posts Index View
             return View(posts);
@@ -118,6 +128,10 @@ namespace BlogProject.Controllers
                         .Select(t => t.Text.ToLower())
                         .Distinct().ToList()
             };
+
+            ViewData["HeaderImage"] = _imageService.DecodeImage(post.ImageData, post.ContentType);
+            ViewData["HeaderTitleText"] = post.Title;
+            ViewData["HeaderSubText"] = post.Abstract;
 
             return View(dataVM);
         }
@@ -207,7 +221,7 @@ namespace BlogProject.Controllers
             return View(post);
         }
 
-        // GET: Posts/Edit/id (such as 5)
+        // GET: Posts/Edit/id 
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)

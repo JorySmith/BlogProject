@@ -13,15 +13,18 @@
         <div class="col-9 border-right">
             @Html.Raw(Model.Post.Content)
         </div>
+        <!-- BLOG TAGS -->
         <div class="col-3 text-center fw-bold h6" >
             <div class="card d-flex flex-column align-items-center">
-                <img src="/img/tag.jpg" alt="Tags" width="110px">
+                <img src="/img/tag.jpg" alt="Tags" width="110">
                 <div class="card-body">
                     <h4 class="card-title">Blog Tags</h4>
                     <div class="tagView mt-3">
                         @foreach (var tag in Model.Tags)
                         {
-                            <a asp-action="TagIndex" asp-route-tag="@tag" class="mb-1 btn btn-sm btn-warning btn-outline-dark">#@tag</a>
+                            <a asp-action="TagIndex" 
+                               asp-route-tag="@tag" 
+                               class="mb-1 btn btn-sm btn-warning btn-outline-dark">#@tag</a>
                         }
                     </div>
                 </div>
@@ -30,14 +33,16 @@
     </div>
   
 </article>
-
+<!-- POST TAGS -->
 <article>
     <hr />
     <h3 class="text-center fw-bold">Tags</h3>
     <div class="col text-center">
         @foreach (var tag in Model.Post.Tags.ToList())
         {
-            <a asp-action="TagIndex" asp-route-tag="@tag.Text.ToLower()" class="mb-1 btn btn-sm btn-warning btn-outline-dark">#@tag.Text</a>
+            <a asp-action="TagIndex" 
+               asp-route-tag="@tag.Text.ToLower()" 
+               class="mb-1 btn btn-sm btn-warning btn-outline-dark">#@tag.Text</a>
         }
     </div>
     <hr />
@@ -169,7 +174,7 @@
                 @if (User.IsInRole(BlogRole.Moderator.ToString()) || User.IsInRole(BlogRole.Administrator.ToString()) && comment.Deleted is null)
                 {
                     <hr>
-                    <div class="row">                          
+                    <div class="row d-flex justify-content-center">                          
                         <div class="col-2">
                             <button  class="btn-sm btn-dark fw-bold" 
                                      data-bs-toggle="modal" 

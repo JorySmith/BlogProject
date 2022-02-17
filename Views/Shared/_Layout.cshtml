@@ -23,11 +23,17 @@
 
 <body>
 
-    <!-- Navigation-->
+    <!-- Navbar-->
     <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" asp-controller="Home" asp-action="Index">Blog Project</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">Dev Blogs</a>
+            <button class="navbar-toggler" 
+                    type="button" 
+                    data-bs-toggle="collapse" 
+                    data-bs-target="#navbarResponsive" 
+                    aria-controls="navbarResponsive" 
+                    aria-expanded="false" 
+                    aria-label="Toggle navigation">
                 Menu
                 <i class="fas fa-bars"></i>
             </button>
@@ -42,7 +48,7 @@
                     <li class="nav-item">
                         <a class="nav-link px-lg-3 py-3 py-lg-4" asp-controller="Home" asp-action="Contact">Contact</a>
                     </li>
-                    <!-- With Razor C# code: If admin user is logged in, display create blog link -->
+                    <!-- C# Razor markup: If admin user is logged in, display create blog link -->
                     @if (User.IsInRole("Administrator"))
                     {
                         <li class="nav-item">
@@ -55,35 +61,64 @@
         </div>
     </nav>
 
-    <!-- Page Header-->
-    <header class="masthead" style="background-image: url('/img/home-bg.jpg')">
-        <div class="container position-relative px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-                    <div class="site-heading">
-
-                        @*Title*@
-                        <h1>Blog Title</h1>
-
-                        @*Subtitle*@
-                        <span class="subheading">Subtitle</span>
-
-                        <!-- Search box/form -->
-                        <form asp-action="SearchIndex" asp-controller="Posts">
-                            <div class="input-group mt-5">
-                                <!-- Store search term in input attribute name="" -->
-                                <input type="text" name="SearchTerm" class="form-control" placeholder="Search Term">
-                                <div class="input-group-append">
-                                    <button class="btn btn-warning" type="submit">Search</button>
+    <!-- Header-->
+    <!-- If user is on Blog Project home page, display corresponding header image, title, and subtext -->
+    @if (ViewData["Title"].ToString() == "Dev Blogs")
+    {
+        <header class="masthead" style="background-image: url('./img/home-bg.jpg')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">   
+                            @*Title*@
+                            <h1>Dev Blogs</h1>
+                            @*Subtitle*@
+                            <span class="subheading">A blog CMS and full stack web app built with C# ASP.NET MVC, JavaScript, Bootstrap, and PostgreSQL.</span>
+                            <!-- Search box/form -->
+                            <form asp-action="SearchIndex" asp-controller="Posts">
+                                <div class="input-group mt-5">
+                                    <!-- Store search term in input attribute name="" -->
+                                    <input type="text" name="SearchTerm" class="form-control" placeholder="Search Term">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-warning" type="submit">Search</button>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </header>
+        </header>
+    } else    
+    {
+        <!-- Else display corresponding POST header image, title, and subtext-->
+        <header class="masthead" style="background-image: url(@ViewData["HeaderImage"])">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">   
+                            @*Title*@
+                            <h1>@ViewData["HeaderTitleText"]</h1>
+                            @*Subtitle*@
+                            <span class="subheading">@ViewData["HeaderSubText"]</span>
+                            <!-- Search box/form -->
+                            <form asp-action="SearchIndex" asp-controller="Posts">
+                                <div class="input-group mt-5">
+                                    <!-- Store search term in input attribute name="" -->
+                                    <input type="text" name="SearchTerm" class="form-control" placeholder="Search Term">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-warning" type="submit">Search</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    }    
 
     <!-- Main Content-->
     <div class="container-md text-center">

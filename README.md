@@ -1,20 +1,20 @@
-# Blog Project
- A full stack Blog web app built with C# ASP.NET MVC, JavaScript, and PostgreSQL.  
+# Dev Blogs - A Blog Project
+ A blog content management site and full stack web app built with C# ASP.NET MVC, JavaScript, Bootstrap, and PostgreSQL.  
 
  ## Features
  - Dyanmic and searchable blogs, posts, comments, and tags
- - Backend database using PostgreSql
- - Create, read, update, and delete (CRUD) functionality
+ - Create, Read, Update, and Delete (CRUD) functionality
+ - Model, View, Controller (MVC) and Object Oriented Programming (OOP) principles
  - ASP.NET Core Identity for security, user authentication, and roles
- - Entity Framework Core and C# code-first migration for backend database setup and integration
+ - PostgreSQL for backend database storage
+ - Entity Framework Core and C# code-first models for backend database setup and integration
+ - Custom interfaces and services 
  - Pagination using NuGet packages
  - Custom routing with URL slugs created with RegEx
- - C# ASP.NET MVC design pattern
- - Object oriented programming (OOP) principles
 
  ## Build Steps
  1) Create models/C# classes: Blog, Post, Comment, Tag, and BlogUser  
- 2) Create code-first migration then integrate and update local PostgreSQL database via appsettings.json DefaultConnection      
+ 2) Create code-first migration, connect to local PostgreSQL database via appsettings.json DefaultConnection      
  3) Create CRUD scaffolding (controller routes and actions, views, and identity pages)  
  4) Find and implement a blog template  
  5) Create Data service  
