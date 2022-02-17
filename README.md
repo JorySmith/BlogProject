@@ -1,5 +1,5 @@
 # Dev Blogs - A Blog Project
- A blog content management site and full stack web app built with C# ASP.NET MVC, JavaScript, Bootstrap, and PostgreSQL. Deployed and hosted on Heroku.  
+ A blog content management site and full stack web app built with C#, ASP.NET MVC, JavaScript, Bootstrap, and PostgreSQL. Deployed and hosted on Heroku.  
 
  ## Live Demo
  https://dev-blog-project.herokuapp.com/  

@@ -66,6 +66,12 @@ header.masthead .site-heading {
     padding: 100px 0;
 }
 
+#subheading {
+    line-height: 2.5rem;
+    letter-spacing: .5px;
+    margin: 2rem 0;
+}
+
 /* Google map */
 #map {
     height: 400px;
