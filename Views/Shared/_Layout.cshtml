@@ -95,7 +95,7 @@
     {
         <!-- Else if home page: display unique image, title, and subtitle -->
         <!-- Blog background image -->
-        <header class="masthead p-5" style="background: fixed no-repeat url('/img/home-bg.jpg')">
+        <header class="masthead p-5" style="background: fixed no-repeat url('/img/home-bg.jpg');background-size: cover">
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
@@ -122,9 +122,9 @@
         </header>
     } else
     {
-        <!-- Else: display only search box -->
+        <!-- Else on About/Contact/etc.: display only search box -->
         <!-- Blog background image -->
-        <header class="masthead p-5" style="background: fixed url('/img/home-bg.jpg') no-repeat 0% 0%; background-size: contain">
+        <header class="masthead p-5" style="background: fixed url('/img/home-bg.jpg') no-repeat 0% 0%; background-size: cover">
             <div class="container position-relative px-4 px-lg-5">
                 <!-- Search box/form -->
                 <form asp-action="SearchIndex" asp-controller="Posts">
