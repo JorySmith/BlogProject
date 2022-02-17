@@ -1,5 +1,8 @@
 # Dev Blogs - A Blog Project
- A blog content management site and full stack web app built with C# ASP.NET MVC, JavaScript, Bootstrap, and PostgreSQL.  
+ A blog content management site and full stack web app built with C# ASP.NET MVC, JavaScript, Bootstrap, and PostgreSQL. Deployed and hosted on Heroku.  
+
+ ## Live Demo
+
 
  ## Features
  - Dyanmic and searchable blogs, posts, comments, and tags
@@ -10,7 +13,8 @@
  - Entity Framework Core and C# code-first models for backend database setup and integration
  - Custom interfaces and services 
  - Pagination using NuGet packages
- - Custom routing with URL slugs created with RegEx
+ - Custom routing with URL slugs created with RegEx 
+ - CI/CD between the code repo in GitHub and the web app host Heroku
 
  ## Build Steps
  1) Create models/C# classes: Blog, Post, Comment, Tag, and BlogUser  
@@ -36,3 +40,6 @@
  21) Add moderate comments functionality  
  22) Add delete comments functionality  
  23) Update landing, BlogPostIndex, and Post Details pages  
+ 24) Set up Heroku hosting, postegres db, and .NET buildpack  
+ 25) Create Data/ConnectionService to manage postgres connections (local vs Heroku)  
+ 26) Set up CI/CD between GitHub repo and Heroku  
