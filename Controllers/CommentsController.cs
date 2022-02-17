@@ -51,7 +51,7 @@ namespace BlogProject.Controllers
         // The rest can be dome programmatically below
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PostId,Body")] Comment comment)
+        public async Task<IActionResult> Create([Bind("PostId,Body")] Comment comment, string slug)
         {
             if (ModelState.IsValid)
             {
@@ -65,8 +65,10 @@ namespace BlogProject.Controllers
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
 
-                // Redirect to Post Details not Comments Index
-                return RedirectToAction(nameof(Index));
+                // Redirect user to Details action of PostsController 
+                // Pass new route obj using slug argument
+                // Pass fragment indicating #commentSection 
+                return RedirectToAction("Details", "Posts", new { slug }, "commentSection");
             }
             
             return View(comment);
