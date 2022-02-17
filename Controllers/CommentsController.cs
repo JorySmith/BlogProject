@@ -24,20 +24,20 @@ namespace BlogProject.Controllers
         }
 
         // GET: Comments
-
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> OriginalIndex()
         {
             var originalComments = await _context.Comments.ToListAsync();
             return View("Index", originalComments);
         }
-        
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> ModeratedIndex()
         {
             // Filter where comments are moderated, i.e. moderated data is not null
             var moderatedComments = await _context.Comments.Where(c => c.Moderated != null).ToListAsync();
             return View("Index", moderatedComments);
-        }        
-
+        }
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Index()
         {
             var allComments = await _context.Comments.ToListAsync();

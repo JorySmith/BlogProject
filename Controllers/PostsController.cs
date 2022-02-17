@@ -57,6 +57,7 @@ namespace BlogProject.Controllers
         }
 
         // GET: Posts, a list of all posts for all blogs
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Posts.Include(p => p.Blog).Include(p => p.BlogUser);
