@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using BlogProject.Enums;
 using X.PagedList;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlogProject.Controllers
 {
@@ -137,6 +138,7 @@ namespace BlogProject.Controllers
         }
 
         // GET: Posts/Create
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             // Store ViewData including BlogID ID and Name, and BlogUserId Id.
@@ -147,6 +149,7 @@ namespace BlogProject.Controllers
 
         // POST: Posts/Create
         // Update Bind to reflect the data the user will HTTP POST after submitting the form
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("BlogId,Title,Abstract,Content,ReadyStatus,Image")] Post post, List<string> tagValues)
@@ -222,6 +225,7 @@ namespace BlogProject.Controllers
         }
 
         // GET: Posts/Edit/id 
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -246,6 +250,7 @@ namespace BlogProject.Controllers
 
         // POST: Posts/Edit/id
         // Update Bind to reflect the data the user will HTTP POST after submitting the form
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,BlogId,Title,Abstract,Content,ReadyStatus")] Post post, IFormFile newImage, List<string> tagValues)
@@ -336,6 +341,7 @@ namespace BlogProject.Controllers
         }
 
         // GET: Posts/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -356,6 +362,7 @@ namespace BlogProject.Controllers
         }
 
         // POST: Posts/Delete/5
+        [Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

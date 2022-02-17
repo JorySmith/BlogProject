@@ -33,6 +33,7 @@ namespace BlogProject.Controllers
 
         // Controller actions/methods
         // GET: Blogs
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Index()
         {
             // Return View of a _context list of Blogs including the parent of BlogUser (Author)
@@ -40,6 +41,7 @@ namespace BlogProject.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        [Authorize(Roles = "Administrator")]
         // GET: Blogs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -71,6 +73,7 @@ namespace BlogProject.Controllers
         // POST: Blogs/Create
         // Binds help protect against overposting attacks by selecting the only
         // accepted properties to be sent via HTTP POST
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Description,Image")] Blog blog)
@@ -91,7 +94,7 @@ namespace BlogProject.Controllers
             ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", blog.BlogUserId);
             return View(blog);
         }
-
+        [Authorize(Roles = "Administrator")]
         // GET: Blogs/Edit/id
         public async Task<IActionResult> Edit(int? id)
         {
@@ -111,6 +114,7 @@ namespace BlogProject.Controllers
 
         // POST: Blogs/Edit/id
         // Capture any new blog image changes
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Blog blog, IFormFile newImage)
@@ -171,6 +175,7 @@ namespace BlogProject.Controllers
         }
 
         // GET: Blogs/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -191,6 +196,7 @@ namespace BlogProject.Controllers
 
         // POST: Blogs/Delete/5
         // ActionName to assign a new Action name instead of DeleteConfirmed
+        [Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
