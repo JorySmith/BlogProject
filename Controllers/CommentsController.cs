@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BlogProject.Data;
 using BlogProject.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlogProject.Controllers
 {
@@ -190,6 +191,7 @@ namespace BlogProject.Controllers
 
 
         // GET: Comments/Delete/id
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -212,6 +214,7 @@ namespace BlogProject.Controllers
 
         // POST: Comments/Delete/5
         // ActionName can be just Delete
+        [Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed([Bind("Id")] Comment comment, string slug)
