@@ -2,7 +2,7 @@
  A blog content management site and full stack web app built with C# ASP.NET MVC, JavaScript, Bootstrap, and PostgreSQL. Deployed and hosted on Heroku.  
 
  ## Live Demo
-
+ https://dev-blog-project.herokuapp.com/  
 
  ## Features
  - Dyanmic and searchable blogs, posts, comments, and tags
