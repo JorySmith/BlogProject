@@ -62,37 +62,10 @@
     </nav>
 
     <!-- Header-->
-    <!-- If user is on Blog Project home page, display corresponding header image, title, and subtext -->
-    @if (ViewData["Title"].ToString() == "Dev Blogs")
+    <!-- If user is on BlogPostIndex or Post Details pages, display corresponding header image, title, and subtext -->
+    @if (ViewData["Title"].ToString() == "Blog Posts" || ViewData["Title"].ToString() == "Blog Post")
     {
-        <header class="masthead" style="background-image: url('./img/home-bg.jpg')">
-            <div class="container position-relative px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <div class="site-heading">   
-                            @*Title*@
-                            <h1>Dev Blogs</h1>
-                            @*Subtitle*@
-                            <span class="subheading">A blog CMS and full stack web app built with C# ASP.NET MVC, JavaScript, Bootstrap, and PostgreSQL.</span>
-                            <!-- Search box/form -->
-                            <form asp-action="SearchIndex" asp-controller="Posts">
-                                <div class="input-group mt-5">
-                                    <!-- Store search term in input attribute name="" -->
-                                    <input type="text" name="SearchTerm" class="form-control" placeholder="Search Term">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-warning" type="submit">Search</button>
-                                    </div>
-                                </div>
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-    } else    
-    {
-        <!-- Else display corresponding POST header image, title, and subtext-->
+        <!-- Blog background image -->
         <header class="masthead" style="background-image: url(@ViewData["HeaderImage"])">
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -118,7 +91,54 @@
                 </div>
             </div>
         </header>
-    }    
+    } else if (ViewData["Title"].ToString() == "Dev Blogs")    
+    {
+        <!-- Else if home page: display unique image, title, and subtitle -->
+        <!-- Blog background image -->
+        <header class="masthead p-5" style="background-image: url('/img/home-bg.jpg')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">   
+                            @*Title*@
+                            <h1>Dev Blogs</h1>
+                            @*Subtitle*@
+                            <span class="subheading">A blog CMS and full stack web app built with C# ASP.NET MVC, JavaScript, Bootstrap, and PostgreSQL.</span>
+                            <!-- Search box/form -->
+                            <form asp-action="SearchIndex" asp-controller="Posts">
+                                <div class="input-group mt-5">
+                                    <!-- Store search term in input attribute name="" -->
+                                    <input type="text" name="SearchTerm" class="form-control" placeholder="Search Term">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-warning" type="submit">Search</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    } else
+    {
+        <!-- Else: display only search box -->
+        <!-- Blog background image -->
+        <header class="masthead p-5" style="background-image: url('/img/home-bg.jpg')">
+            <div class="container position-relative px-4 px-lg-5">
+                <!-- Search box/form -->
+                <form asp-action="SearchIndex" asp-controller="Posts">
+                    <div class="input-group mt-5">
+                        <!-- Store search term in input attribute name="" -->
+                        <input type="text" name="SearchTerm" class="form-control p-1" placeholder="Search Term">
+                        <div class="input-group-append">
+                            <button class="btn btn-warning" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </header>
+    }
 
     <!-- Main Content-->
     <div class="container-md text-center">
