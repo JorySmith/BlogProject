@@ -66,7 +66,7 @@
     @if (ViewData["Title"].ToString() == "Blog Posts" || ViewData["Title"].ToString() == "Blog Post")
     {
         <!-- Blog background image -->
-        <header class="masthead p-5" style="background-image: url(@ViewData["HeaderImage"])">
+        <header class="masthead p-5" style="background: fixed no-repeat url(@ViewData["HeaderImage"]);background-size: cover">
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
@@ -85,7 +85,6 @@
                                     </div>
                                 </div>
                             </form>
-
                         </div>
                     </div>
                 </div>
