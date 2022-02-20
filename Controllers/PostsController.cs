@@ -39,9 +39,14 @@ namespace BlogProject.Controllers
             _blogSearchService = blogSearchService;
         }
 
-        // GET: SearchIndex 
+        // POST: SearchIndex 
         public async Task<IActionResult> SearchIndex(int? page, string searchTerm)
         {
+            if (searchTerm is null)
+            {
+                return NotFound();
+            }
+
             // Save searchTerm in ViewData
             ViewData["SearchTerm"] = searchTerm;
 

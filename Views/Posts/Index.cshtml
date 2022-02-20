@@ -33,7 +33,7 @@
         <tr>
             <td>
                 @*Decode post image using image service*@
-                <img class="img-fluid" width="200px" src="@imageService.DecodeImage(item.ImageData, item.ContentType)" />
+                <img class="img-fluid" width="200" src="@imageService.DecodeImage(item.ImageData, item.ContentType)" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
