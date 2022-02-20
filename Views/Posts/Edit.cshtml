@@ -16,26 +16,26 @@
             <input type="hidden" asp-for="Id" />
             @*Blog Id*@
             <div class="form-group my-3">
-                <label asp-for="BlogId" class="control-label"></label>
+                <label asp-for="BlogId" class="form-label"></label>
                 <select asp-for="BlogId" class="form-select" asp-items="ViewBag.BlogId"></select>
                 <span asp-validation-for="BlogId" class="text-danger"></span>
             </div>
             @*Title*@
             <div class="form-group my-3">
-                <label asp-for="Title" class="control-label"></label>
+                <label asp-for="Title" class="form-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             @*Abstract*@
             <div class="form-group my-3">
-                <label asp-for="Abstract" class="control-label"></label>
+                <label asp-for="Abstract" class="form-label"></label>
                 <textarea asp-for="Abstract" class="form-control"></textarea>
                 <span asp-validation-for="Abstract" class="text-danger"></span>
             </div>
             @*Content/body, ensure summernote script is below*@
             <div class="form-group my-3 text-start">
-                <label asp-for="Content" class="control-label"></label>
-                <textarea asp-for="Content" class="form-control"></textarea>
+                <label asp-for="Content" class="form-label"></label>
+                <textarea id="Content" asp-for="Content" class="form-control"></textarea>
                 <span asp-validation-for="Content" class="text-danger"></span>
             </div>
             @*Tag Entry*@
@@ -71,7 +71,7 @@
             @*Ready status*@
             @*Add asp-items="Html.GetEnumSelectList<ReadyStatus>()", add using directive above*@
             <div class="form-group my-3">
-                <label asp-for="ReadyStatus" class="control-label"></label>                
+                <label asp-for="ReadyStatus" class="form-label"></label>                
                 <select asp-for="ReadyStatus" class="form-select" asp-items="Html.GetEnumSelectList<ReadyStatus>()"></select>
                 <span asp-validation-for="ReadyStatus" class="text-danger"></span>
             </div>            
@@ -92,9 +92,9 @@
     <script>
         let tagValues = "@ViewData["TagValues"]";
 
-
-
         $('#Content').summernote({
+            lineWrapping: true,
+            maxWidth: 100, 
             placeholder: "Post contents"
         });
     </script>
