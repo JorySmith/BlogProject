@@ -78,6 +78,16 @@
                                 asp-route-id="@blog.Id">Edit Blog</a>
                         </div>
                     }
+                    @*Delete blog*@
+                    @if (User.IsInRole(BlogRole.Administrator.ToString()))
+                    {
+                        <div class="text-center">
+                            <a class="btn btn-danger btnWide mb-2" 
+                                asp-action="Delete" 
+                                asp-controller="Blogs" 
+                                asp-route-id="@blog.Id">Delete Blog</a>
+                        </div>
+                    }
 
                 </div>                
             </div>

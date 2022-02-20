@@ -14,11 +14,19 @@
 
 @if (User.IsInRole(BlogRole.Administrator.ToString()))
     {
+        @*Edit button*@
         <div class="text-center">
             <a class="btn btn-success btn-sm btnWide mb-2" 
                 asp-action="Edit" 
                 asp-controller="Posts" 
                 asp-route-id="@Model.Post.Id">Edit Post</a>
+        </div>
+        @*Delete button*@
+        <div class="text-center">
+            <a class="btn btn-danger btn-sm btnWide mb-2" 
+                asp-action="Delete" 
+                asp-controller="Posts" 
+                asp-route-id="@Model.Post.Id">Delete Post</a>
         </div>
     }
 

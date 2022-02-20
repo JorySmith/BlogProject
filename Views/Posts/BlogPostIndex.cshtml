@@ -63,6 +63,16 @@
                                 asp-route-id="@post.Id">Edit Post</a>
                         </div>
                     }
+                    @*Delete post*@
+                    @if (User.IsInRole(BlogRole.Administrator.ToString()))
+                    {
+                        <div class="text-center">
+                            <a class="btn btn-danger btnWide mb-2" 
+                                asp-action="Delete" 
+                                asp-controller="Posts" 
+                                asp-route-id="@post.Id">Delete Post</a>
+                        </div>
+                    }
                     @*Blog image*@
                     <img class="card-img-bottom mt-1" 
                          src="@imageService.DecodeImage(post.ImageData, post.ContentType)" 
