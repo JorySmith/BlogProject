@@ -28,7 +28,7 @@
                         {
                             <a asp-action="TagIndex" 
                                asp-route-tag="@tag" 
-                               class="mb-1 btn btn-sm btn-warning btn-outline-dark">#@tag</a>
+                               class="mb-1 btn btn-sm btn-warning btn-outline-dark" name="searchTag">#@tag</a>
                         }
                     </div>
                 </div>
@@ -44,9 +44,14 @@
     <div class="col text-center">
         @foreach (var tag in Model.Post.Tags.ToList())
         {
-            <a asp-action="TagIndex" 
+            @*<a asp-action="TagIndex" 
                asp-route-tag="@tag.Text.ToLower()" 
-               class="mb-1 btn btn-sm btn-warning btn-outline-dark">#@tag.Text</a>
+               class="mb-1 btn btn-sm btn-warning btn-outline-dark">#@tag.Text</a>*@
+               <form asp-action="TagIndex" method="post" class="d-inline-block">
+                   @Html.Hidden("SearchTag", tag.Text)                                        
+                   <button type="submit" class="mb-1 btn btn-sm btn-warning btn-outline-dark">#@tag.Text</button>
+                                      
+               </form>
         }
     </div>
     <hr />

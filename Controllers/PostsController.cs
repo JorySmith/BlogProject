@@ -61,6 +61,36 @@ namespace BlogProject.Controllers
             return View(await posts.ToPagedListAsync(pageNumber, pageSize));
         }
 
+        // POST: TagIndex
+        public async Task<IActionResult> TagIndex(int? page, string searchTag)
+        {
+            if (searchTag is null)
+            {
+                return NotFound();
+            }
+
+            ViewData["SearchTag"] = searchTag;
+
+            // Pagination defaults, pass to ToPagedListAsync below
+            var pageNumber = page ?? 1;
+            var pageSize = 5;
+
+            // Search post tags in db
+            var posts = _context.Posts
+                .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady)
+                .AsQueryable(); // in case user's search submit is empty
+
+            // create new tag from searchTag
+            var newTag = new Tag();
+            newTag.Text = searchTag;
+          
+
+            posts = posts.Where(p => p.Tags.Contains(newTag));
+
+            // Await sending posts to View, also invoke ToPagedListAsync
+            return View(await posts.ToPagedListAsync(pageNumber, pageSize));
+        }
+
         // GET: Posts, a list of all posts for all blogs
         [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Index()
