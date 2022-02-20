@@ -12,6 +12,16 @@
     ViewData["Title"] = "Blog Post";
 }
 
+@if (User.IsInRole(BlogRole.Administrator.ToString()))
+    {
+        <div class="text-center">
+            <a class="btn btn-success btn-sm btnWide mb-2" 
+                asp-action="Edit" 
+                asp-controller="Posts" 
+                asp-route-id="@Model.Post.Id">Edit Post</a>
+        </div>
+    }
+
 <!-- POST CONTENT-->
 <article>  
     <div class="row row-cols-1 row-cols-lg-2 gx-4">        
