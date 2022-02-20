@@ -2,6 +2,10 @@
     font-weight: bolder;
 }
 
+.container-md {
+    max-width: 65%;
+}
+
 .commentArea {
     width: 50vw;
     max-width: 700px;

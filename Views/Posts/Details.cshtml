@@ -13,12 +13,13 @@
 }
 
 <article>  
-    <div class="row">
-        <div class="col-9 border-right">
+    <div class="row row-cols-1 row-cols-lg-2 gx-4">
+        <!-- POST CONTENT-->
+        <div class="col col-lg-8">
             @Html.Raw(Model.Post.Content)
         </div>
         <!-- BLOG TAGS -->
-        <div class="col-3 text-center fw-bold h6" >
+        <div class="col col-lg-3 text-center fw-bold h6" >
             <div class="card d-flex flex-column align-items-center">
                 <img class="blogTagsImg img-fluid" src="/img/tag.jpg" alt="Tags" max-width="110">
                 <div class="card-body">
@@ -34,8 +35,7 @@
                 </div>
             </div>
         </div>
-    </div>
-  
+    </div>  
 </article>
 <!-- POST TAGS -->
 <article>
@@ -69,8 +69,10 @@
             <label class="h2 form-label fw-bold">Add a Comment</label>
             <textarea name="body" class="form-control" rows="5"></textarea>
         </div>
-
-        <button type="submit" class="btn btn-dark btn-sm">Submit</button>
+        <div class="d-flex justify-content-end w-100">
+            <button type="submit" class="btn btn-dark btn-sm">Submit</button>
+        </div>
+        
     </form>
     }
     else
