@@ -124,7 +124,7 @@ namespace BlogProject.Controllers
                 .OrderByDescending(p => p.Created)
                 .ToPagedListAsync(pageNumber, pageSize);
 
-            // Add ViewData for blog image, name, and description
+            // Add ViewData for blog image, name, and description            
             ViewData["HeaderImage"] = _imageService.DecodeImage(blog.ImageData, blog.ContentType);
             ViewData["HeaderTitleText"] = blog.Name;
             ViewData["HeaderSubText"] = blog.Description;
@@ -145,7 +145,8 @@ namespace BlogProject.Controllers
             // Find the post that belongs to slug in context DB
             // Include post author/BlogUser, tags, and comments
             // Collect authors of comments and moderators of comments
-            var post = await _context.Posts                
+            var post = await _context.Posts
+                .Include(p => p.Blog)
                 .Include(p => p.BlogUser)
                 .Include(p => p.Tags)
                 .Include(p => p.Comments)
@@ -165,7 +166,7 @@ namespace BlogProject.Controllers
                         .Select(t => t.Text.ToLower())
                         .Distinct().ToList()
             };
-
+            ViewData["BlogName"] =
             ViewData["HeaderImage"] = _imageService.DecodeImage(post.ImageData, post.ContentType);
             ViewData["HeaderTitleText"] = post.Title;
             ViewData["HeaderSubText"] = post.Abstract;

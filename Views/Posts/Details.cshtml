@@ -12,9 +12,9 @@
     ViewData["Title"] = "Blog Post";
 }
 
+<!-- POST CONTENT-->
 <article>  
-    <div class="row row-cols-1 row-cols-lg-2 gx-4">
-        <!-- POST CONTENT-->
+    <div class="row row-cols-1 row-cols-lg-2 gx-4">        
         <div class="col col-lg-8">
             @Html.Raw(Model.Post.Content)
         </div>
@@ -37,6 +37,18 @@
         </div>
     </div>  
 </article>
+
+<!-- Back to Blog Link -->
+@*Read posts*@
+<div>
+    <a class="btn btn-light btn-sm" 
+        asp-action="BlogPostIndex" 
+        asp-controller="Posts" 
+        asp-route-id="@Model.Post.BlogId">
+        &#x2B05; @Model.Post.Blog.Name Blog - Home
+    </a>
+</div>
+
 <!-- POST TAGS -->
 <article>
     <hr />
