@@ -16,6 +16,10 @@
     margin: 1rem 0;
 }
 
+.blogTagsImg {
+    margin-top: 1rem;
+}
+
 /* Navigation */
 .nav {
     display: inline-block;
