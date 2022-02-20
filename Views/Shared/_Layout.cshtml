@@ -78,7 +78,7 @@
                             <span class="subheading" id="subheading">@ViewData["HeaderSubText"]</span>
                             <!-- Search box/form -->
                             <form asp-action="SearchIndex" asp-controller="Posts">
-                                <div class="input-group mt-5">
+                                <div class="input-group mt-5" id="searchBox">
                                     <!-- Store search term in input attribute name="" -->
                                     <input required type="text" name="SearchTerm" class="form-control" placeholder="Search for posts">
                                     <div class="input-group-append">

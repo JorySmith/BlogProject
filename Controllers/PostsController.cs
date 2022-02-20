@@ -297,6 +297,8 @@ namespace BlogProject.Controllers
                 return NotFound();
             }
 
+            string postSlug;
+
             if (ModelState.IsValid)
             {
                 try
@@ -318,12 +320,14 @@ namespace BlogProject.Controllers
                     // See if result slug matches newPost.Slug
                     // if so, update newPost.Slug and .Title
                     var newSlug = _slugService.UrlFriendly(post.Title);
+                    postSlug = newSlug;
                     if (newSlug != newPost.Slug)
                     {
                         if (_slugService.IsUnique(newSlug))
                         {
                             newPost.Slug = newSlug;
                             newPost.Title = post.Title;
+                            postSlug = newPost.Slug;
                         }
                         else
                         {
@@ -369,8 +373,8 @@ namespace BlogProject.Controllers
                         throw;
                     }
                 }
-                // Redirect user back to Post Index
-                return RedirectToAction(nameof(Index));
+                // Redirect user back to Post Details
+                return RedirectToAction("Details", "Posts", new { slug = postSlug }, "searchBox");
             }
             ViewData["BlogId"] = new SelectList(_context.Blogs, "Id", "Description", post.BlogId);
             ViewData["BlogUserId"] = new SelectList(_context.Users, "Id", "Id", post.BlogUserId);
