@@ -43,3 +43,4 @@
  24) Set up Heroku hosting, postegres db, and .NET buildpack  
  25) Create Data/ConnectionService to manage postgres connections (local vs Heroku)  
  26) Set up CI/CD between GitHub repo and Heroku  
+ 27) Create Tag indexing and searching functionality   
