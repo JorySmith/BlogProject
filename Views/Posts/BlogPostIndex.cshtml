@@ -16,6 +16,14 @@
 }
 
 <div class="row d-flex justify-content-center">
+    @if (User.IsInRole(BlogRole.Administrator.ToString()))
+        {
+            <div class="text-center">
+                <a class="btn btn-success btn-sm btnWide mb-2" 
+                    asp-action="Create" 
+                    asp-controller="Posts">Create a New Post</a>
+            </div>
+        }
     @foreach (var post in Model)
     {
         //Is the logged in user the Author of this post??
