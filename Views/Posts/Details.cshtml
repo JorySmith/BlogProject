@@ -45,9 +45,10 @@
                     <div class="tagView mt-3">
                         @foreach (var tag in Model.Tags)
                         {
-                            <a asp-action="TagIndex" 
-                               asp-route-tag="@tag" 
-                               class="mb-1 btn btn-sm btn-warning btn-outline-dark" name="searchTag">#@tag</a>
+                            <form asp-action="TagIndex" method="post" class="d-inline-block">
+                                @Html.Hidden("SearchTag", tag)                                        
+                                <button type="submit" class="mb-1 btn btn-sm btn-warning btn-outline-dark">#@tag</button>                                      
+                            </form>
                         }
                     </div>
                 </div>
@@ -74,14 +75,11 @@
     <div class="col text-center">
         @foreach (var tag in Model.Post.Tags.ToList())
         {
-            @*<a asp-action="TagIndex" 
-               asp-route-tag="@tag.Text.ToLower()" 
-               class="mb-1 btn btn-sm btn-warning btn-outline-dark">#@tag.Text</a>*@
-               <form asp-action="TagIndex" method="post" class="d-inline-block">
-                   @Html.Hidden("SearchTag", tag.Text)                                        
-                   <button type="submit" class="mb-1 btn btn-sm btn-warning btn-outline-dark">#@tag.Text</button>
+            <form asp-action="TagIndex" method="post" class="d-inline-block">
+                @Html.Hidden("SearchTag", tag.Text)                                        
+                <button type="submit" class="mb-1 btn btn-sm btn-warning btn-outline-dark">#@tag.Text</button>
                                       
-               </form>
+            </form>
         }
     </div>
     <hr />

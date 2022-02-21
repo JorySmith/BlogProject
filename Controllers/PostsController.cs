@@ -78,7 +78,7 @@ namespace BlogProject.Controllers
             // Store Posts and tags
             var posts = _context.Posts.Include(p => p.Tags).Where(
                 p => p.ReadyStatus == ReadyStatus.ProductionReady &&
-                p.Tags.Count > 0);                
+                p.Tags.Any(t => t.Text.Contains(searchTag)));                
 
             // Await sending posts to View, also invoke ToPagedListAsync
             return View(await posts.ToPagedListAsync(pageNumber, pageSize));
