@@ -9,48 +9,69 @@
     <h1 class="text-center">Contact</h1>
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-            <p class="text-center">Want to get in touch? Let me know!</p>
-            <!-- Contact Form - Enter your email address on line 19 of the mail/contact_me.php file to make this form work. -->
-            <!-- WARNING: Some web hosts do not allow emails to be sent through forms to common mail hosts like Gmail or Yahoo. It's recommended that you use a private domain email address! -->
-            <!-- To use the contact form, your site must be on a live web host with PHP! The form will not work locally! -->
+            <p class="text-center">Want to get in touch? Let me know!</p>            
             <form asp-action="Contact">
-                <div class="control-group">
+                @*Name*@
+                <div class="control-group">                    
                     <div class="form-group form-floating">                        
-                        <input asp-for="Name" type="text" class="form-control" placeholder="Name" required data-validation-required-message="Please enter your name.">
+                        <input asp-for="Name" 
+                            type="text" 
+                            class="form-control" 
+                            placeholder="Name" required 
+                            data-validation-required-message="Please enter your name.">
                         <label>Name</label>
                         <p class="help-block text-danger"></p>
                     </div>
                 </div>
+                @*Email*@
                 <div class="control-group">
                     <div class="form-group form-floating">                        
-                        <input asp-for="Email" type="email" class="form-control" placeholder="Email Address" required data-validation-required-message="Please enter your email address.">
+                        <input asp-for="Email" 
+                               type="email" 
+                               class="form-control" 
+                               placeholder="Email Address" required 
+                               data-validation-required-message="Please enter your email address.">
                         <label>Email Address</label>
                         <p class="help-block text-danger"></p>
                     </div>
                 </div>
+                @*Phone*@
                 <div class="control-group">
                     <div class="col-xs-12 form-group form-floating">
-                        <input asp-for="Phone" type="tel" class="form-control" placeholder="Phone Number" required data-validation-required-message="Please enter your phone number.">
+                        <input asp-for="Phone" 
+                               type="tel" 
+                               class="form-control" 
+                               placeholder="Phone Number" 
+                               data-validation-required-message="Please enter your phone number.">
                         <label>Phone Number</label>                        
                         <p class="help-block text-danger"></p>
                     </div>
                 </div>
+                @*Subject*@
                 <div class="control-group">
                     <div class="col-xs-12 form-group form-floating">
-                        <input asp-for="Subject" class="form-control" placeholder="Subject" required data-validation-required-message="Please enter your phone number.">
+                        <input asp-for="Subject" 
+                               class="form-control" 
+                               placeholder="Subject" required 
+                               data-validation-required-message="Please enter your phone number.">
                         <label>Subject</label>
                         <p class="help-block text-danger"></p>
                     </div>
                 </div>
+                @*Message*@
                 <div class="control-group">
                     <div class="form-group controls">  
                         <label>Message</label>
-                        <textarea rows="5" class="form-control" asp-for="Message" required data-validation-required-message="Please enter a message.">
+                        <textarea asp-for="Message"  
+                                  rows="5" 
+                                  class="form-control" required   
+                                  data-validation-required-message="Please enter a message.">
                         </textarea>                        
                         <p class="help-block text-danger"></p>
                     </div>
                 </div>
                 <br>
+                @*Button*@
                 <div id="success"></div>
                 <button type="submit" class="btn btn-primary" id="sendMessageButton">Send</button>
             </form>
