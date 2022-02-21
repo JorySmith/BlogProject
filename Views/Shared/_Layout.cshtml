@@ -67,7 +67,7 @@
         <!-- Blog background image -->
         <header class="masthead p-1 p-lg-5" style="background: fixed no-repeat url(@ViewData["HeaderImage"]);background-size: cover">
             <div class="container position-relative px-1 px-lg-5">
-                <div class="row gx-4 gx-lg-5 d-flex justify-content-center">
+                <div class="row m-0 d-flex justify-content-center">
                     <div class="col-md-10">
                         <div class="site-heading">   
                             @*Title*@
@@ -93,7 +93,7 @@
     {
         <!-- Else if home page: display unique image, title, and subtitle -->
         <!-- Blog background image -->
-        <header class="masthead p-1 p-lg-5" style="background: fixed no-repeat url('/img/home-bg.jpg');background-size: cover">
+        <header class="masthead h-75 p-1 p-lg-5" style="background: fixed no-repeat url('/img/home-bg.jpg');background-size: cover">
             <div class="container position-relative px-1 px-lg-5">
                 <div class="row m-0 d-flex justify-content-center">
                     <div class="col-md-10">
@@ -118,13 +118,21 @@
                 </div>
             </div>
         </header>
+        @if (User.IsInRole(BlogRole.Administrator.ToString()))
+        {
+            <div class="text-center d-flex justify-content-center">
+                <span><a class="btn btn-success btn-sm btnWide mb-2" 
+                    asp-action="Create" 
+                    asp-controller="Blogs">Create a New Blog</a></span>                
+            </div>
+        }
     } else
     {
         <!-- Else on About/Contact/etc.: display only search box -->
         <!-- Blog background image -->
         <header class="masthead p-1 p-lg-5" style="background: fixed url('/img/home-bg.jpg') no-repeat 0% 0%; background-size: cover">
             <div class="container position-relative px-1 px-lg-5">
-                <div class="row gx-4 gx-lg-5 d-flex justify-content-center">
+                <div class="row m-0 d-flex justify-content-center">
                     <div class="col-md-10">
                         <!-- Search box/form -->
                         <form asp-action="SearchIndex" asp-controller="Posts">
@@ -143,15 +151,7 @@
     }
 
     <!-- Main Content-->
-    <div class="container-md">
-        @if (User.IsInRole(BlogRole.Administrator.ToString()))
-        {
-            <div class="text-center">
-                <a class="btn btn-success btn-sm btnWide mb-2" 
-                    asp-action="Create" 
-                    asp-controller="Blogs">Create a New Blog</a>
-            </div>
-        }
+    <div class="container-md">        
         @RenderBody()
     </div>
 

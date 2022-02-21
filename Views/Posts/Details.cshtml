@@ -31,11 +31,14 @@
     }
 
 <!-- POST CONTENT-->
-<article id="postContent">  
-    <div class="row row-cols-1 row-cols-lg-2 gx-4">        
-        <div class="col col-lg-8">
+<article id="postContent"  class="py-5">  
+    <div class="row row-cols-1 row-cols-lg-2 gx-4">  
+        <div class="col col-lg-8 mb-5">
+            <p class="m-0">By @Html.Raw(Model.Post.BlogUser.DisplayName)</p>
+            <p class="m-0 mb-3 fs-6">Posted on @Html.Raw(Model.Post.Created.ToString("MMMM dd, yyyy"))</p>
+            <hr />
             @Html.Raw(Model.Post.Content)
-        </div>
+        </div>        
         <!-- BLOG TAGS -->
         <div class="col col-lg-3 text-center fw-bold h6 ms-auto" >
             <div class="card d-flex flex-column align-items-center">

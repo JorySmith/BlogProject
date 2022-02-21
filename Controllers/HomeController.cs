@@ -20,7 +20,9 @@ namespace BlogProject.Controllers
         private readonly IBlogEmailSender _emailSender;
         private readonly ApplicationDbContext _dbContext;
 
-        public HomeController(ILogger<HomeController> logger, IBlogEmailSender emailSender, ApplicationDbContext dbContext)
+        public HomeController(ILogger<HomeController> logger, 
+               IBlogEmailSender emailSender, 
+               ApplicationDbContext dbContext)
         {
             _logger = logger;
             _emailSender = emailSender;
@@ -34,11 +36,10 @@ namespace BlogProject.Controllers
             var pageNumber = page ?? 1;
             // Set default pageSize, pass to ToPageListAsync
             var pageSize = 3;
+
             
             // Get NuGet package X.PagedList to use ToPagedListAsync and ref IPagedList interface
             var blogs = _dbContext.Blogs
-                //.Where(
-                //b => b.Posts.Any(p => p.ReadyStatus == Enums.ReadyStatus.ProductionReady))
                 .Include(b => b.BlogUser)
                 .OrderByDescending(b => b.Created)
                 .ToPagedListAsync(pageNumber, pageSize);
