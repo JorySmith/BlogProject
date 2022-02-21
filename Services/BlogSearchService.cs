@@ -23,7 +23,7 @@ namespace BlogProject.Services
             // Get posts from DB that are production ready
             var posts = _context.Posts
                 .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady)
-                .AsQueryable(); // in case user's search submit is empty
+                .AsQueryable(); 
 
             if (searchTerm != null)
             {
@@ -42,7 +42,6 @@ namespace BlogProject.Services
                                         c.BlogUser.LastName.ToLower().Contains(searchTerm) ||
                                         c.BlogUser.Email.ToLower().Contains(searchTerm)));
             }
-
             // Order posts in descending order (most recent first)
             posts = posts.OrderByDescending(p => p.Created);
 

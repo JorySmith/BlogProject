@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BlogProject.Data;
 using BlogProject.Models;
+using BlogProject.Enums;
 using BlogProject.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using BlogProject.Enums;
 using X.PagedList;
 using Microsoft.AspNetCore.Authorization;
 
@@ -75,17 +75,10 @@ namespace BlogProject.Controllers
             var pageNumber = page ?? 1;
             var pageSize = 5;
 
-            // Search post tags in db
-            var posts = _context.Posts
-                .Where(p => p.ReadyStatus == ReadyStatus.ProductionReady)
-                .AsQueryable(); // in case user's search submit is empty
-
-            // create new tag from searchTag
-            var newTag = new Tag();
-            newTag.Text = searchTag;
-          
-
-            posts = posts.Where(p => p.Tags.Contains(newTag));
+            // Store Posts and tags
+            var posts = _context.Posts.Include(p => p.Tags).Where(
+                p => p.ReadyStatus == ReadyStatus.ProductionReady &&
+                p.Tags.Count > 0);                
 
             // Await sending posts to View, also invoke ToPagedListAsync
             return View(await posts.ToPagedListAsync(pageNumber, pageSize));
