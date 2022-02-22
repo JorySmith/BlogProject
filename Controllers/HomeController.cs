@@ -41,7 +41,6 @@ namespace BlogProject.Controllers
             // Get NuGet package X.PagedList to use ToPagedListAsync and ref IPagedList interface
             var blogs = _dbContext.Blogs
                 .Include(b => b.BlogUser)
-                .OrderByDescending(b => b.Created)
                 .ToPagedListAsync(pageNumber, pageSize);
 
             return View(await blogs);
