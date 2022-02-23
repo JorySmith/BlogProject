@@ -217,6 +217,6 @@ div.swal2-container.swal2-center.swal2-backdrop-show > div {
 
 @media screen and (min-width: 900px) {
     .container-md {
-        max-width: 65%;
+        max-width: 1018px;
     }
 }
