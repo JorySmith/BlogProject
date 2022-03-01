@@ -29,6 +29,7 @@ namespace BlogProject
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // GetConnectionString() looks in the appsettings.json for the value to the key DefaultConnection
+        // ConfigureServices adds required interfaces with their specific dependency injections 
         public void ConfigureServices(IServiceCollection services)
         {
             // Use Npgsql after getting both NPGSQL NuGet packages
@@ -67,6 +68,7 @@ namespace BlogProject
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // Configure is used to add middleware
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
