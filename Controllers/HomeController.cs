@@ -16,7 +16,6 @@ namespace BlogProject.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly IBlogEmailSender _emailSender;
         private readonly ApplicationDbContext _dbContext;
 
@@ -24,7 +23,6 @@ namespace BlogProject.Controllers
                IBlogEmailSender emailSender, 
                ApplicationDbContext dbContext)
         {
-            _logger = logger;
             _emailSender = emailSender;
             _dbContext = dbContext;
         }
