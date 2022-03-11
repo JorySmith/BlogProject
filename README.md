@@ -44,3 +44,4 @@
  25) Create Data/ConnectionService to manage postgres connections (local vs Heroku)  
  26) Set up CI/CD between GitHub repo and Heroku  
  27) Create Tag indexing and searching functionality   
+ 28) Ensure CI/CD working properly  
