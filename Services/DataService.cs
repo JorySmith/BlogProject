@@ -25,7 +25,7 @@ namespace BlogProject.Services
             _userManager = userManager;
         }
 
-        // 
+        // If needed, migrate data to DB and seed users and roles
         public async Task ManageDataAsync()
         {
             // Create DB from migrations using MigrateAsync
