@@ -12,10 +12,10 @@ namespace BlogProject.Services
 {
     public class EmailService : IBlogEmailSender
     {
-        // Store instance of MailSettings, generate constructor
+        // Store instance of MailSettings, add to constructor
         private readonly MailSettings _mailSettings;
 
-        // Generated constructor, update with IOptions
+        // Constructor, update with IOptions
         public EmailService(IOptions<MailSettings> mailSettings)
         {
             _mailSettings = mailSettings.Value; // Grab the .Value

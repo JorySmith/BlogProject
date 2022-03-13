@@ -18,7 +18,10 @@ namespace BlogProject.Services
         private readonly UserManager<BlogUser> _userManager;
 
         // Constructor injection into every instance of DataService, ApplicationDbContext and RoleManager
-        public DataService(ApplicationDbContext dbContext, RoleManager<IdentityRole> roleManager, UserManager<BlogUser> userManager)
+        public DataService(
+            ApplicationDbContext dbContext, 
+            RoleManager<IdentityRole> roleManager, 
+            UserManager<BlogUser> userManager)
         {
             _dbContext = dbContext;
             _roleManager = roleManager;
