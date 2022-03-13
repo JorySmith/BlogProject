@@ -7,7 +7,7 @@
 @using X.PagedList.Mvc.Core
 @using X.PagedList.Web.Common
 
-@*Inject instance of image service with an identifier*@
+@*Inject services: instance of image service with an identifier*@
 @inject IImageService imageService
 @*Inject instance of user manager of type BlogUser*@
 @inject UserManager<BlogUser> _userManager
@@ -16,123 +16,123 @@
 @model IPagedList<Blog>
 
 @{
-    ViewData["Title"] = "Dev Blogs";
+  ViewData["Title"] = "Dev Blogs";
 }
 
 
 <div class="row d-flex justify-content-center">
-    <!-- For each blog in <Blog> Model, create a blog -->
-    @foreach (var blog in Model)
-    {
-        <div class="col-sm-12 col-xl-6 mt-2">
-            <div class="card border-dark">                
+  <!-- For each blog in <Blog> Model, create a blog -->
+  @foreach (var blog in Model)
+  {
+    <div class="col-sm-12 col-xl-6 mt-2">
+      <div class="card border-dark">
 
-                <div class="card-body text-center">
-                    @*Blog image*@
-                    <img src="@imageService.DecodeImage(blog.ImageData, blog.ContentType)" 
-                         class="card-img-top" 
-                         alt="Blog image" />
-                    @*Blog name*@
-                    <div class="title d-flex justify-content-center align-items-center">                        
-                        <h5 class="card-title">@blog.Name</h5>                        
-                    </div>
-                    @*Description*@
-                    <div>
-                        <p class="card-text cftooltip"
-                           data-bs-toggle="tooltip"
-                           data-placement="top"
-                           title=""
-                           data-original-title="@blog.Description">
-                            @blog.Description
-                        </p>
-                    </div>
-                    <br />
-                    @*Read posts*@
-                    <div class="text-center">
-                        <a class="btn btn-dark btnWide mb-2" 
-                            asp-action="BlogPostIndex" 
-                            asp-controller="Posts" 
-                            asp-route-id="@blog.Id">
-                            Read posts
-                        </a>
-                    </div>
+        <div class="card-body text-center">
+          @*Blog image*@
+          <img src="@imageService.DecodeImage(blog.ImageData, blog.ContentType)"
+             class="card-img-top"
+             alt="Blog image" />
+          @*Blog name*@
+          <div class="title d-flex justify-content-center align-items-center">
+            <h5 class="card-title">@blog.Name</h5>
+          </div>
+          @*Description*@
+          <div>
+            <p class="card-text cftooltip"
+             data-bs-toggle="tooltip"
+             data-placement="top"
+             title=""
+             data-original-title="@blog.Description">
+              @blog.Description
+            </p>
+          </div>
+          <br />
+          @*Read posts*@
+          <div class="text-center">
+            <a class="btn btn-dark btnWide mb-2"
+             asp-action="BlogPostIndex"
+             asp-controller="Posts"
+             asp-route-id="@blog.Id">
+              Read posts
+            </a>
+          </div>
 
-                    @*If logged in user is an admin, display Create Post and Edit Blog buttons*@
-                    @*Create post*@
-                    @if (User.IsInRole(BlogRole.Administrator.ToString()))
-                    {
-                        <div class="text-center">
-                            <a class="btn btn-success btnWide mb-2" 
-                                asp-action="Create" 
-                                asp-controller="Posts" 
-                                asp-route-id="@blog.Id">Create Post</a>
-                        </div>
-                    }
-                    @*Edit blog*@
-                    @if (User.IsInRole(BlogRole.Administrator.ToString()))
-                    {
-                        <div class="text-center">
-                            <a class="btn btn-dark btnWide mb-2" 
-                                asp-action="Edit" 
-                                asp-controller="Blogs" 
-                                asp-route-id="@blog.Id">Edit Blog</a>
-                        </div>
-                    }
-                    @*Delete blog*@
-                    @if (User.IsInRole(BlogRole.Administrator.ToString()))
-                    {
-                        <div class="text-center">
-                            <a class="btn btn-danger btnWide mb-2" 
-                                asp-action="Delete" 
-                                asp-controller="Blogs" 
-                                asp-route-id="@blog.Id">Delete Blog</a>
-                        </div>
-                    }
-
-                </div>                
+          @*If logged in user is an admin, display Create Post and Edit Blog buttons*@
+          @*Create post*@
+          @if (User.IsInRole(BlogRole.Administrator.ToString()))
+          {
+            <div class="text-center">
+              <a class="btn btn-success btnWide mb-2"
+             asp-action="Create"
+             asp-controller="Posts"
+             asp-route-id="@blog.Id">Create Post</a>
             </div>
+          }
+          @*Edit blog*@
+          @if (User.IsInRole(BlogRole.Administrator.ToString()))
+          {
+            <div class="text-center">
+              <a class="btn btn-dark btnWide mb-2"
+             asp-action="Edit"
+             asp-controller="Blogs"
+             asp-route-id="@blog.Id">Edit Blog</a>
+            </div>
+          }
+          @*Delete blog*@
+          @if (User.IsInRole(BlogRole.Administrator.ToString()))
+          {
+            <div class="text-center">
+              <a class="btn btn-danger btnWide mb-2"
+             asp-action="Delete"
+             asp-controller="Blogs"
+             asp-route-id="@blog.Id">Delete Blog</a>
+            </div>
+          }
+
         </div>
-    }
+      </div>
+    </div>
+  }
 
 </div>
 
 
 <!-- Paging controls, get NuGet Packages X.PagedList.MVC.Core and .Web.Common -->
 <div class="row mt-4 text-start">
-    <div class="col h5">
-        <!-- Page X of Y Text -->
-        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-    </div>
+  <div class="col h5">
+    <!-- Page X of Y Text -->
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+  </div>
 </div>
 <!-- Clickable page navigation -->
 <div class="row">
-    <div class="col">
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
-        new PagedListRenderOptions
-        {
-        LiElementClasses = new string[] { "page-item" },
-        PageClasses = new string[] { "page-link" }
-        })
-    </div>
+  <div class="col">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
+    new PagedListRenderOptions
+    {
+    LiElementClasses = new string[] { "page-item" },
+    PageClasses = new string[] { "page-link" }
+    })
+  </div>
 </div>
 
 @section Scripts {
 
 <script>
-    var swalMsg = '@TempData["SweetAlert"]'
+  var swalMsg = '@TempData["SweetAlert"]'
 
-    if (swalMsg != "") {
-        swalMsg.fire({
-            icon: 'success',
-            title: swalMsg,
-            timer: 2500
-        })
-    }
+  if (swalMsg != "") {
+      swalMsg.fire({
+          icon: 'success',
+          title: swalMsg,
+          timer: 2500
+      })
+  }
 
 
-    $(document).ready(function () {
-        $("p").tooltip();
-    })
+  $(document).ready(function () {
+      $("p").tooltip();
+  })
 
 
 </script>

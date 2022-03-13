@@ -49,7 +49,7 @@ namespace BlogProject.Models
         [Display(Name = "Image File Type")] // Data name label
         public string ContentType { get; set; }
         [NotMapped] // Don't map user's submitted image to DB, use byte[] of image
-        public IFormFile Image { get; set; }
+        public IFormFile Image { get; set; }       
 
         // Navigation virtual properties (public virtual Type Name {})
         // Use IdentityUser to store Author ID

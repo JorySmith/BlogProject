@@ -16,7 +16,9 @@ namespace BlogProject.Areas.Identity.Pages.Account
         private readonly UserManager<BlogUser> _userManager;
         private readonly IEmailSender _sender;
 
-        public RegisterConfirmationModel(UserManager<BlogUser> userManager, IEmailSender sender)
+        public RegisterConfirmationModel(
+          UserManager<BlogUser> userManager, 
+          IEmailSender sender)
         {
             _userManager = userManager;
             _sender = sender;

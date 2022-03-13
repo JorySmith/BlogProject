@@ -2,7 +2,7 @@
 @model BlogProject.Models.Post
 
 @{
-    ViewData["Title"] = "Create";
+  ViewData["Title"] = "Create";
 }
 
 <h1>Create</h1>
@@ -10,104 +10,104 @@
 <h4>Post</h4>
 <hr />
 <div class="row d-flex justify-content-center">
-    <div class="col-md-8">
-        @* Form - Add enctype="multipart/form-data" for Image IFormFile integration *@
-        <form asp-action="Create" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @*Blog Id/name*@
-            <div class="form-group my-3">
-                <label asp-for="BlogId" class="form-label"></label>
-                <select asp-for="BlogId" class="form-select" asp-items="ViewBag.BlogId"></select>
-            </div>
-            @*Post Title*@
-            <div class="form-group my-3">
-                <label asp-for="Title" class="form-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            @*Abstract*@
-            <div class="form-group my-3">
-                <label asp-for="Abstract" class="form-label"></label>
-                <textarea asp-for="Abstract" class="form-control"></textarea>
-                <span asp-validation-for="Abstract" class="text-danger"></span>
-            </div>
-            @*Content*@
-            <div class="form-group my-3 text-start">
-                <label asp-for="Content" class="form-label"></label>
-                @*Summernote requires a textarea instead of input:*@
-                <textarea asp-for="Content" class="form-control"></textarea>
-                <span asp-validation-for="Content" class="text-danger"></span>
-            </div>
-            @*Image*@
-            <div class="form-group my-3">
-                <label asp-for="Image" class="form-label"></label>
-                @* Add type="file", make sure form above has enctype="multipart/form-data" *@
-                <input type="file" asp-for="Image" class="form-control" />
-                <span asp-validation-for="Image" class="text-danger"></span>
-            </div>
-            @*Tags*@
-            <div class="form-group my-3">
+  <div class="col-md-8">
+    @* Form - Add enctype="multipart/form-data" for Image IFormFile integration *@
+    <form asp-action="Create" enctype="multipart/form-data">
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      @*Blog Id/name*@
+      <div class="form-group my-3">
+        <label asp-for="BlogId" class="form-label"></label>
+        <select asp-for="BlogId" class="form-select" asp-items="ViewBag.BlogId"></select>
+      </div>
+      @*Post Title*@
+      <div class="form-group my-3">
+        <label asp-for="Title" class="form-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+      </div>
+      @*Abstract*@
+      <div class="form-group my-3">
+        <label asp-for="Abstract" class="form-label"></label>
+        <textarea asp-for="Abstract" class="form-control"></textarea>
+        <span asp-validation-for="Abstract" class="text-danger"></span>
+      </div>
+      @*Content*@
+      <div class="form-group my-3 text-start">
+        <label asp-for="Content" class="form-label"></label>
+        @*Summernote requires a textarea instead of input:*@
+        <textarea asp-for="Content" class="form-control"></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+      </div>
+      @*Image*@
+      <div class="form-group my-3">
+        <label asp-for="Image" class="form-label"></label>
+        @* Add type="file", make sure form above has enctype="multipart/form-data" *@
+        <input type="file" asp-for="Image" class="form-control" />
+        <span asp-validation-for="Image" class="text-danger"></span>
+      </div>
+      @*Tags*@
+      <div class="form-group my-3">
 
-                <div class="row">
-                    <div class="col">
-                        <label class="form-label">Manage This Post's Tags</label>
-                    </div>
-                </div>
-                @*Tag Entry*@
-                <div class="row">
-                    <div class="col">
-                        <div class="row">
-                            <div class="col">
-                                <input type="text" class="form-control mb-2" id="TagEntry" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 d-grid">
-                                <button onclick="addTag()" name="Add" type="button" class="btn btn-dark btn-sm my-1">Add Tag</button>                                
-                            </div>
-                            <div class="col-md-6 d-grid">                                
-                                <button onclick="removeTag()" name="Remove" type="button" class="btn btn-dark btn-sm my-1">Remove Tag</button>
-                            </div>
-                        </div>
-                    </div>
-                    @*Tag Values*@
-                    <div class="col d-grid">
-                        <select name="TagValues" id="TagList" multiple></select>
-                    </div>                    
-                </div>
+        <div class="row">
+          <div class="col">
+            <label class="form-label">Manage This Post's Tags</label>
+          </div>
+        </div>
+        @*Tag Entry*@
+        <div class="row">
+          <div class="col">
+            <div class="row">
+              <div class="col">
+                <input type="text" class="form-control mb-2" id="TagEntry" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 d-grid">
+                <button onclick="addTag()" name="Add" type="button" class="btn btn-dark btn-sm my-1">Add Tag</button>
+              </div>
+              <div class="col-md-6 d-grid">
+                <button onclick="removeTag()" name="Remove" type="button" class="btn btn-dark btn-sm my-1">Remove Tag</button>
+              </div>
+            </div>
+          </div>
+          @*Tag Values*@
+          <div class="col d-grid">
+            <select name="TagValues" id="TagList" multiple></select>
+          </div>
+        </div>
 
-            </div>
-            @*Ready status*@
-            <div class="form-group my-3">
-                <label asp-for="ReadyStatus" class="control-label"></label>
-                @* Add asp-items="Html.GetEnumList<ReadyStatus>()" *@
-                <select asp-for="ReadyStatus" asp-items="@Html.GetEnumSelectList<ReadyStatus>()" class="form-select"></select>
-                <span asp-validation-for="ReadyStatus" class="text-danger"></span>
-            </div>            
-            @*Submit btn*@
-            <div class="form-group my-3 d-grid">
-                <button type="submit" value="Create" class="btn btn-sm btn-dark">Create Post</button>
-            </div>
-        </form>
-    </div>
+      </div>
+      @*Ready status*@
+      <div class="form-group my-3">
+        <label asp-for="ReadyStatus" class="control-label"></label>
+        @* Add asp-items="Html.GetEnumList<ReadyStatus>()" *@
+        <select asp-for="ReadyStatus" asp-items="@Html.GetEnumSelectList<ReadyStatus>()" class="form-select"></select>
+        <span asp-validation-for="ReadyStatus" class="text-danger"></span>
+      </div>
+      @*Submit btn*@
+      <div class="form-group my-3 d-grid">
+        <button type="submit" value="Create" class="btn btn-sm btn-dark">Create Post</button>
+      </div>
+    </form>
+  </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+  <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts{
 
-    
 
-    <script>
-        let tagValues = '@ViewData["TagValues"]';
 
-        $('#Content').summernote({
-            placeholder: "Post contents"
-        });
-    </script>
+<script>
+  let tagValues = '@ViewData["TagValues"]';
 
-    <!-- Core theme JS-->
-    <script src="/js/custom.js"></script>
+  $('#Content').summernote({
+      placeholder: "Post contents"
+  });
+</script>
+
+<!-- Core theme JS-->
+<script src="/js/custom.js"></script>
 }
